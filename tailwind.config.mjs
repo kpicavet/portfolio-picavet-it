@@ -2,9 +2,6 @@
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    container: {
-      padding: "4rem",
-    },
     extend: {
       colors: {
         primary: "#B33A3A",
