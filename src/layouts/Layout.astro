@@ -21,13 +21,29 @@ const { title } = Astro.props;
     <title>{title}</title>
     <ViewTransitions />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script is:inline>
+      (function() {
+        function getInitialColorMode() {
+          const persistedColorPreference = window.localStorage.getItem('theme');
+          const hasPersistedPreference = typeof persistedColorPreference === 'string';
+          if (hasPersistedPreference) {
+            return persistedColorPreference;
+          }
+          const mql = window.matchMedia('(prefers-color-scheme: dark)');
+          const hasMediaQueryPreference = typeof mql.matches === 'boolean';
+          if (hasMediaQueryPreference) {
+            return mql.matches ? 'dark' : 'light';
+          }
+          return 'dark';
+        }
+        const colorMode = getInitialColorMode();
+        document.documentElement.classList.toggle('dark', colorMode === 'dark');
+      })();
+    </script>
   </head>
   <body class="font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
     <Header />
     <slot />
     <Footer />
-    <script>
-      // Theme toggle logic (same as before)
-    </script>
   </body>
 </html>
