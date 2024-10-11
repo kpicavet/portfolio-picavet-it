@@ -1,0 +1,54 @@
+---
+import ThemeToggle from './ThemeToggle';
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+];
+---
+
+<header class="fixed w-full z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <a href="/" class="flex items-center gap-3 hover:text-primary">
+      <svg class="h-10 w-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0L93.3013 25V75L50 100L6.69873 75V25L50 0Z" fill="#B33A3A"/>
+        <path d="M50 20L79.8076 35V65L50 80L20.1924 65V35L50 20Z" fill="#7ED3B2"/>
+        <text x="50" y="60" font-family="Arial" font-size="24" fill="white" text-anchor="middle">PI</text>
+      </svg>
+    </a>
+    <nav>
+      <ul class="flex gap-6">
+        {navItems.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <ThemeToggle client:load />
+  </div>
+</header>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+</script>

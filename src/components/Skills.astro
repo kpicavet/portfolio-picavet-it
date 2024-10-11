@@ -1,0 +1,29 @@
+---
+const skills = [
+  { name: 'Angular', level: 90 },
+  { name: 'React', level: 85 },
+  { name: 'Node.js', level: 80 },
+  { name: 'TypeScript', level: 95 },
+  { name: 'MongoDB', level: 75 },
+  { name: 'PostgreSQL', level: 70 },
+];
+---
+
+<section id="skills" class="py-20 bg-gray-50 dark:bg-gray-800">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12 text-primary dark:text-secondary">Skills</h2>
+    <div class="max-w-3xl mx-auto">
+      {skills.map(skill => (
+        <div class="mb-6">
+          <div class="flex justify-between mb-1">
+            <span class="text-base font-medium text-primary dark:text-secondary">{skill.name}</span>
+            <span class="text-sm font-medium text-primary dark:text-secondary">{skill.level}%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div class="bg-secondary h-2.5 rounded-full" style={`width: ${skill.level}%`}></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
