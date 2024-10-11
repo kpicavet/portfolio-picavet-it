@@ -1,19 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-	theme: {
-		extend: {
-			colors: {
-				primary: '#B33A3A',
-				secondary: '#7ED3B2',
-				accent: '#FFFFFF',
-				'accent-foreground': '#000000',
-			},
-			fontFamily: {
-				sans: ['Poppins', 'sans-serif'],
-			},
-		},
-	},
-	plugins: [],
-	darkMode: 'class',
-}
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  theme: {
+    container: {
+      padding: "4rem",
+    },
+    extend: {
+      colors: {
+        primary: "#B33A3A",
+        secondary: "#7ED3B2",
+        accent: "#FFFFFF",
+        "accent-foreground": "#000000",
+      },
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"],
+      },
+    },
+  },
+  plugins: [],
+  darkMode: "class",
+};
