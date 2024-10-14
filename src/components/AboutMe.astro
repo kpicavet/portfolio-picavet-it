@@ -3,7 +3,7 @@ const facts = [
   "Being an Anderlecht fan these days is like a test of patience—thank goodness for snacks during the games!",
   "I have a secret talent for creating elaborate LEGO structures that would make any architect proud (or at least my kids!).",
   "I'm currently working on a new project that has me excited and buzzing with ideas—let's just say it involves some clever coding magic!",
-  "When you hear me chuckling at my code, just know I’m laughing off the bugs!",
+  "When you hear me chuckling at my code, just know I'm laughing off the bugs!",
 ];
 ---
 
@@ -14,54 +14,39 @@ const facts = [
     >
       Hello, World! I'm Kenny
     </h2>
-    <div class="flex flex-col lg:flex-row items-center gap-12">
-      <div class="lg:w-2/5 flex justify-center">
+    <div class="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
+      <div class="lg:w-1/4 w-full flex justify-center lg:sticky lg:top-24">
         <div class="relative inline-block">
           <img
             src="family.jpg"
             alt="Kenny Picavet"
             class="rounded-full shadow-lg w-64 h-64 object-cover"
           />
-          <div
-            class="absolute -top-4 -right-4 bg-secondary text-primary p-2 rounded-full shadow-lg"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-            </svg>
-          </div>
         </div>
       </div>
-      <div class="lg:w-3/5">
-        <p class="text-gray-700 dark:text-gray-300 mb-2">
-          When I'm not wrestling with code or chasing down elusive bugs, you'll
-          find me cheering on my two energetic boys. My 10-year-old is a budding
-          basketball star, always perfecting his shots, while my 5-year-old
-          loves to kick the ball around as he dreams of becoming a football pro.
-          Our weekends are filled with laughter and competition as we support
-          each other on and off the field.
-        </p>
-        <p class="text-gray-700 dark:text-gray-300 mb-2">
-          I have a knack for enjoying good meals, and there's nothing quite like
-          a night out at a restaurant. Whether it's a cozy family dinner or a
-          fun night out, I relish the simple pleasure of enjoying familiar
-          favorites without the hassle of cooking!
-        </p>
-
-        <p class="text-gray-700 dark:text-gray-300 mb-6">
-          And when the creative urge strikes, I dive into my LEGO collection. We
-          love picking out fun sets and building them together—because who
-          doesn’t enjoy following the instructions to create something awesome?
-        </p>
+      <div class="lg:w-3/4">
+        <div class="space-y-4 mb-8">
+          <p class="text-gray-700 dark:text-gray-300">
+            When I'm not wrestling with code or chasing down elusive bugs,
+            you'll find me cheering on my two energetic boys. My 10-year-old is
+            a budding basketball star, always perfecting his shots, while my
+            5-year-old loves to kick the ball around as he dreams of becoming a
+            football pro. Our weekends are filled with laughter and competition
+            as we support each other on and off the field.
+          </p>
+          <p class="text-gray-700 dark:text-gray-300">
+            I have a knack for enjoying good meals, and there's nothing quite
+            like a night out at a restaurant. Whether it's a cozy family dinner
+            or a fun night out, I relish the simple pleasure of enjoying
+            familiar favorites without the hassle of cooking!
+          </p>
+          <p class="text-gray-700 dark:text-gray-300">
+            And when the creative urge strikes, I dive into my LEGO collection.
+            We love picking out fun sets and building them together—because who
+            doesn't enjoy following the instructions to create something
+            awesome?
+          </p>
+        </div>
 
         <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <h4
@@ -69,10 +54,15 @@ const facts = [
           >
             Fun Facts About Me:
           </h4>
-          <ul
-            class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300"
-          >
-            {facts.map((fact) => <li>{fact}</li>)}
+          <ul class="space-y-2 text-gray-700 dark:text-gray-300 list-none pl-0">
+            {
+              facts.map((fact) => (
+                <li class="flex">
+                  <span class="mr-2">•</span>
+                  <span>{fact}</span>
+                </li>
+              ))
+            }
           </ul>
         </div>
       </div>
