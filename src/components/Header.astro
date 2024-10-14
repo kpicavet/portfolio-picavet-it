@@ -1,16 +1,19 @@
 ---
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Expertise', href: '#expertise' },
-  { label: 'Technologies', href: '#technologies' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: "Home", href: "/" },
+  { label: "Expertise", href: "#expertise" },
+  { label: "Technologies", href: "#technologies" },
+  { label: "Projects", href: "#projects" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 ---
 
-<header class="fixed w-full z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md">
+<header
+  class="fixed w-full z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md"
+>
   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
     <a href="/" class="flex items-center gap-3 hover:text-primary">
       <img src="logo.svg" class="w-auto h-10" alt="Logo" />
@@ -18,22 +21,37 @@ const navItems = [
     <div class="flex items-center">
       <nav class="hidden md:block mr-4">
         <ul class="flex gap-6">
-          {navItems.map(({ label, href }) => (
-            <li>
-              <a
-                href={href}
-                class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
-              >
-                {label}
-              </a>
-            </li>
-          ))}
+          {
+            navItems.map(({ label, href }) => (
+              <li>
+                <a
+                  href={href}
+                  class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </nav>
       <ThemeToggle client:load />
-      <button id="menu-toggle" class="ml-4 md:hidden text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      <button
+        id="menu-toggle"
+        class="ml-4 md:hidden text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </div>
@@ -41,46 +59,48 @@ const navItems = [
   <div id="mobile-menu" class="hidden md:hidden">
     <nav class="px-4 pt-2 pb-4 bg-white/80 dark:bg-gray-800/80">
       <ul class="space-y-2">
-        {navItems.map(({ label, href }) => (
-          <li>
-            <a
-              href={href}
-              class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
-            >
-              {label}
-            </a>
-          </li>
-        ))}
+        {
+          navItems.map(({ label, href }) => (
+            <li>
+              <a
+                href={href}
+                class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors"
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
   </div>
 </header>
 
 <script>
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
 
   if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
     });
   }
 
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
       e.preventDefault();
 
-      const targetId = this.getAttribute('href');
+      const targetId = this.getAttribute("href");
       const targetElement = document.querySelector(targetId);
 
       if (targetElement) {
         targetElement.scrollIntoView({
-          behavior: 'smooth'
+          behavior: "smooth",
         });
-        
+
         // Close the mobile menu after clicking a link
-        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-          mobileMenu.classList.add('hidden');
+        if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+          mobileMenu.classList.add("hidden");
         }
       }
     });
