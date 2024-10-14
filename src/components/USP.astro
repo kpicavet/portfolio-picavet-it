@@ -1,23 +1,51 @@
 ---
 const usps = [
-  { icon: '💻', title: 'Full Stack Expertise', description: 'With 14 years of experience, I excel in both front-end and back-end development, ensuring seamless integration and functionality across the entire stack' },
-  { icon: '🅰️', title: 'Angular Expert', description: 'As a seasoned Angular developer, I deliver dynamic, responsive, and user-friendly interfaces tailored to your business needs' },
-  { icon: '💡', title: 'Problem-Solver Mindset', description: 'I approach each project with a focus on solving complex challenges, providing innovative and efficient solutions to meet unique business goals.' },
-  { icon: '🚀', title: 'Cutting-Edge Solutions', description: 'I stay ahead of industry trends by leveraging the latest technologies and best practices to create modern, future-proof applications.' },
+  {
+    icon: "💻",
+    title: "Full Stack Expertise",
+    description:
+      "With 13 years of experience, I excel in both front-end and back-end development, ensuring seamless integration and functionality across the entire stack",
+  },
+  {
+    icon: "🅰️",
+    title: "Angular Expert",
+    description:
+      "As a seasoned Angular developer, I deliver dynamic, responsive, and user-friendly interfaces tailored to your business needs",
+  },
+  {
+    icon: "💡",
+    title: "Problem-Solver Mindset",
+    description:
+      "I approach each project with a focus on solving complex challenges, providing innovative and efficient solutions to meet unique business goals.",
+  },
+  {
+    icon: "🚀",
+    title: "Cutting-Edge Solutions",
+    description:
+      "I stay ahead of industry trends by leveraging the latest technologies and best practices to create modern, future-proof applications.",
+  },
 ];
 ---
 
 <section id="expertise" class="py-20 bg-gray-50 dark:bg-gray-800">
   <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-12 text-primary dark:text-secondary">Expertise</h2>
+    <h2
+      class="text-3xl font-bold text-center mb-12 text-primary dark:text-secondary"
+    >
+      Expertise
+    </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      {usps.map(usp => (
-        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 border-t-4 border-secondary">
-          <div class="text-4xl mb-4">{usp.icon}</div>
-          <h3 class="text-xl font-semibold mb-2 text-primary dark:text-secondary">{usp.title}</h3>
-          <p class="text-gray-600 dark:text-gray-300">{usp.description}</p>
-        </div>
-      ))}
+      {
+        usps.map((usp) => (
+          <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 border-t-4 border-secondary">
+            <div class="text-4xl mb-4">{usp.icon}</div>
+            <h3 class="text-xl font-semibold mb-2 text-primary dark:text-secondary">
+              {usp.title}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300">{usp.description}</p>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
