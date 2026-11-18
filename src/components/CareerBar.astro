@@ -31,6 +31,12 @@ const segments = experience
   )
   .sort((a, b) => a.start - b.start);
 
+// A break of a month or less carries no information but reads as a glitch: close it
+for (let i = 1; i < segments.length; i++) {
+  const gap = segments[i].start - segments[i - 1].end;
+  if (gap > 0 && gap <= 1 / 12 + 1e-9) segments[i].start = segments[i - 1].end;
+}
+
 const first = Math.floor(segments[0].start);
 const last = Math.max(...segments.map((s) => s.end));
 const span = last - first;

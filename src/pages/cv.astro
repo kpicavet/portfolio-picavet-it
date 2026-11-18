@@ -84,38 +84,40 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         }
       </section>
 
-      <section class="two-col">
-        <div>
-          <h2>Skills</h2>
-          <dl class="skills">
-            {
-              Object.entries(skills).map(([group, items]) => (
-                <div>
-                  <dt>{group}</dt>
-                  <dd>{items.join(', ')}</dd>
-                </div>
-              ))
-            }
-          </dl>
+      <section class="keep">
+        <h2>Skills</h2>
+        {
+          Object.entries(skills).map(([group, items]) => (
+            <div class="row">
+              <p class="label">{group}</p>
+              <p>{items.join(', ')}</p>
+            </div>
+          ))
+        }
+        <div class="row">
+          <p class="label">Languages</p>
+          <p>{profile.languages.join(', ')}</p>
         </div>
-        <div>
-          <h2>Education</h2>
-          {
-            education.map((e) => (
-              <p class="item">
-                <strong>{e.degree}</strong>
-                <br />
-                {e.school}, <span class="nowrap">{formatMonth(e.period.from).slice(-4)}–{e.period.to && formatMonth(e.period.to).slice(-4)}</span>
-              </p>
-            ))
-          }
-          <h2>Conferences</h2>
-          <ul class="plain">
-            {learning.map((l) => <li><span class="year">{l.year}</span>{l.title}</li>)}
-          </ul>
-          <h2>Languages</h2>
-          <p class="item">{profile.languages.join(', ')}</p>
-        </div>
+      </section>
+
+      <section class="keep">
+        <h2>Education &amp; conferences</h2>
+        {
+          education.map((e) => (
+            <div class="row">
+              <p class="label year">{formatMonth(e.period.from).slice(-4)}–{e.period.to && formatMonth(e.period.to).slice(-4)}</p>
+              <p><strong>{e.degree}</strong>, {e.school}</p>
+            </div>
+          ))
+        }
+        {
+          learning.map((l) => (
+            <div class="row">
+              <p class="label year">{l.year}</p>
+              <p>{l.title}</p>
+            </div>
+          ))
+        }
       </section>
     </main>
 
@@ -274,7 +276,17 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         grid-template-columns: 30mm 1fr;
         gap: 0 6mm;
         padding: 3mm 0;
+      }
+      /* long jobs may continue on the next page, but never mid-line:
+         role titles, bullets and the stack line stay whole */
+      .job h3,
+      .job li,
+      .job .stack,
+      .job .body > p {
         break-inside: avoid;
+      }
+      .job .body > h3:first-child {
+        break-after: avoid;
       }
       .job + .job {
         border-top: 1px solid var(--line);
@@ -333,43 +345,26 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         font-size: 9pt;
       }
 
-      .two-col {
+      /* same two-column grid as the jobs, so the whole CV reads as one system */
+      .row {
         display: grid;
-        grid-template-columns: 1.3fr 1fr;
-        gap: 0 10mm;
-        break-inside: avoid;
+        grid-template-columns: 30mm 1fr;
+        gap: 0 6mm;
+        padding: 1.2mm 0;
       }
-      .skills {
+      .row p {
         margin: 0;
       }
-      .skills div {
-        margin-bottom: 2.5mm;
-      }
-      .skills dt {
+      .label {
         font-weight: 650;
       }
-      .skills dd {
-        margin: 0;
-      }
-      .nowrap {
-        white-space: nowrap;
-      }
-      .item {
-        margin: 0 0 2mm;
-      }
-      .plain {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .plain li {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 1.5mm;
-      }
-      .year {
+      .label.year {
+        font-weight: 400;
         color: var(--muted);
         font-variant-numeric: tabular-nums;
+      }
+      .keep {
+        break-inside: avoid;
       }
 
       @media (max-width: 640px) {
@@ -380,7 +375,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
           text-align: left;
         }
         .job,
-        .two-col {
+        .row {
           grid-template-columns: 1fr;
         }
         .meta {

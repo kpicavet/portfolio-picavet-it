@@ -117,9 +117,9 @@ export const experience: Experience[] = [
 ];
 
 export const skills = {
-  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Jest', 'Vitest'],
-  Backend: ['C#', '.NET Core', 'ASP.NET MVC / Web API', 'Entity Framework', 'SQL Server', 'REST'],
-  'Platform & tooling': ['Azure', 'Azure DevOps', 'Docker', 'Git', 'SonarQube', 'Sitecore (headless)'],
+  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Angular Material', 'Transloco / ngx-translate', 'Jest', 'Vitest', 'Karma / Jasmine', 'ESLint / Prettier'],
+  Backend: ['C#', '.NET Core', 'ASP.NET MVC / Web API', 'Entity Framework', 'SQL Server', 'REST', 'Swagger / OpenAPI'],
+  'Platform & tooling': ['Azure', 'Azure Functions', 'Azure DevOps', 'Docker', 'Git', 'SonarQube', 'Sitecore (headless)'],
   'AI-assisted engineering': ['Claude Code', 'Designing skill & agent workflows', 'Reviewing AI-written code'],
   'Ways of working': ['Scrum', 'SAFe', 'Code reviews', 'Technical leadership'],
 };
@@ -133,6 +133,7 @@ export const education = [
 ];
 
 export const learning = [
+  { year: '2025', title: 'DevWorld Conference' },
   { year: '2021', title: 'Nx Conf + workshop: Develop at scale with Nx monorepos' },
   { year: '2019', title: 'AngularConnect' },
   { year: '2018', title: 'NG-BE + workshop: Angular Architecture Patterns' },
