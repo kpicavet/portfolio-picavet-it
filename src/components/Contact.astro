@@ -2,31 +2,31 @@
 import { profile } from '../data/cv';
 
 const field =
-  'mt-1.5 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-ink placeholder:text-muted/70 focus:border-ink focus:outline-none';
+  'mt-1.5 w-full rounded-md border-0 bg-white px-3 py-2.5 text-[#1d2a26] focus:outline-2 focus:outline-offset-2 focus:outline-white';
 ---
 
-<section id="contact" class="border-t border-line bg-surface">
+<section id="contact" class="bg-red text-white [--accent-text:#fff]">
   <div class="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:gap-16 md:py-28">
     <div>
       <h2 class="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl">Get in touch</h2>
-      <p class="max-w-[46ch] text-lg leading-relaxed text-muted">
+      <p class="max-w-[46ch] text-lg leading-relaxed text-white/85">
         I work with companies directly and through agencies. Tell me about the project and the team, and
         I’ll get back to you.
       </p>
 
       <a
         href={`mailto:${profile.email}`}
-        class="mt-8 inline-block text-[clamp(1.35rem,3vw,2rem)] font-bold break-all text-accent-text underline decoration-2 underline-offset-[6px]"
+        class="mt-8 inline-block text-[clamp(1.35rem,3vw,2rem)] font-bold break-all text-white underline decoration-2 underline-offset-[6px]"
       >
         {profile.email}
       </a>
 
       <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
-        <dt class="text-muted">Phone</dt>
+        <dt class="text-white/70">Phone</dt>
         <dd><a href={`tel:${profile.phone.replace(/\s/g, '')}`} class="hover:underline">{profile.phone}</a></dd>
-        <dt class="text-muted">LinkedIn</dt>
+        <dt class="text-white/70">LinkedIn</dt>
         <dd><a href={profile.linkedin} class="hover:underline" target="_blank" rel="noopener noreferrer">kenny-picavet</a></dd>
-        <dt class="text-muted">GitHub</dt>
+        <dt class="text-white/70">GitHub</dt>
         <dd><a href={profile.github} class="hover:underline" target="_blank" rel="noopener noreferrer">kpicavet</a></dd>
       </dl>
     </div>
@@ -49,7 +49,7 @@ const field =
       </div>
       <button
         type="submit"
-        class="rounded-md bg-red px-5 py-3 font-semibold text-white hover:bg-[#962f28] disabled:cursor-wait disabled:opacity-60"
+        class="rounded-md bg-[#1d2a26] px-5 py-3 font-semibold text-white hover:bg-black disabled:cursor-wait disabled:opacity-60"
       >
         Send message
       </button>
@@ -74,7 +74,7 @@ const field =
   const show = (text: string, ok: boolean) => {
     if (!status) return;
     status.textContent = text;
-    status.className = ok ? 'min-h-6 text-mint-deep' : 'min-h-6 text-red';
+    status.className = ok ? 'min-h-6 font-semibold text-white' : 'min-h-6 font-semibold text-white underline';
   };
 
   form?.addEventListener('submit', async (event) => {

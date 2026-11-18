@@ -1,0 +1,76 @@
+---
+/**
+ * The logo drawn as its own construction drawing: the grid of band widths
+ * (u = 20), the three concentric circles (2.5u, 1.5u, 0.5u) and the single
+ * 30° line both stem cuts lie on. Lines draw once, then the mark fills in.
+ */
+const grid = {
+  h: [0, 20, 40, 60, 80],
+  v: [0, 20, 40, 50, 60],
+};
+const radii = [50, 30, 10];
+---
+
+<svg
+  class="blueprint"
+  viewBox="-30 -30 165 200"
+  role="img"
+  aria-label="The Picavet IT logo with its construction lines"
+>
+  <g class="lines" fill="none" stroke="currentColor">
+    {grid.h.map((y, i) => <line x1="-28" y1={y} x2="130" y2={y} pathLength="1" style={`--i:${i}`} />)}
+    {grid.v.map((x, i) => <line x1={x} y1="-28" x2={x} y2="165" pathLength="1" style={`--i:${i + 2}`} />)}
+    {radii.map((r, i) => <circle cx="50" cy="50" r={r} pathLength="1" style={`--i:${i + 4}`} />)}
+    <!-- both stem cuts sit on this one 30° line -->
+    <line class="accent" x1="-28" y1="149.8" x2="128" y2="59.7" pathLength="1" style="--i:7" />
+  </g>
+  <g class="mark">
+    <path fill="#ac3931" d="M0 0H50A50 50 0 0 1 60 98.99L40 110.54V80H50A30 30 0 0 0 50 20H0Z" />
+    <path fill="#7fd1b9" d="M0 40H50A10 10 0 0 1 50 60H20V122.1L0 133.64Z" />
+  </g>
+</svg>
+
+<style>
+  .blueprint {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    color: var(--muted);
+  }
+  .lines {
+    stroke-width: 0.45;
+    opacity: 0.5;
+  }
+  .lines .accent {
+    stroke: var(--red);
+    stroke-dasharray: 2 2;
+    opacity: 0.9;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lines > :not(.accent) {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation-delay: calc(var(--i) * 0.08s);
+    }
+    .lines .accent {
+      opacity: 0;
+      animation: appear 0.4s ease-out 0.9s forwards;
+    }
+    .mark {
+      opacity: 0;
+      animation: appear 0.6s ease-out 1s forwards;
+    }
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes appear {
+    to {
+      opacity: 1;
+    }
+  }
+</style>
