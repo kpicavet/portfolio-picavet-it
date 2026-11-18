@@ -1,5 +1,5 @@
 ---
-import StackLayers from './StackLayers.astro';
+import WorkflowRun from './WorkflowRun.astro';
 import { profile } from '../data/cv';
 
 const builds = [
@@ -24,17 +24,12 @@ const builds = [
         <span class="rotator">
           {
             builds.map((b, i) => (
-              <span class:list={['word', { on: i === 0 }]} data-layer={b.id}>
+              <span class:list={['word', { on: i === 0 }]}>
                 {b.text}
               </span>
             ))
           }
         </span>
-      </p>
-
-      <p class="mt-8 max-w-[50ch] text-lg leading-relaxed text-white/70">
-        Fifteen years in web development, ten of them at Rydoo. Freelance since 2022, right now at
-        Citymesh.
       </p>
 
       <div class="mt-10 flex flex-wrap gap-3">
@@ -50,7 +45,7 @@ const builds = [
       </div>
     </div>
 
-    <StackLayers />
+    <WorkflowRun />
   </div>
 </section>
 
@@ -82,33 +77,14 @@ const builds = [
 </style>
 
 <script>
-  // The sentence and the stack move together: every few seconds the next layer
-  // comes forward. Clicking a layer picks it and pauses the cycle.
+  // "I build …" cycles through what Kenny builds.
   const words = [...document.querySelectorAll<HTMLElement>('[data-builds] .word')];
-  const layers = [...document.querySelectorAll<HTMLButtonElement>('[data-stack] .layer')];
-  const ids = words.map((w) => w.dataset.layer!);
   let index = 0;
-  let timer: number | undefined;
-
-  const show = (i: number) => {
-    index = i;
-    words.forEach((w, j) => w.classList.toggle('on', j === i));
-    layers.forEach((l) => l.setAttribute('aria-pressed', String(l.dataset.layer === ids[i])));
-  };
-
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const start = () => {
-    if (reduced) return;
-    timer = window.setInterval(() => show((index + 1) % ids.length), 2800);
-  };
-
-  layers.forEach((l) =>
-    l.addEventListener('click', () => {
-      window.clearInterval(timer);
-      show(ids.indexOf(l.dataset.layer!));
-    }),
-  );
-
-  show(0);
-  start();
+  const show = (i: number) => words.forEach((w, j) => w.classList.toggle('on', j === i));
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.setInterval(() => {
+      index = (index + 1) % words.length;
+      show(index);
+    }, 2600);
+  }
 </script>

@@ -1,0 +1,167 @@
+---
+/**
+ * A small wall-tablet mock-up in the style of Kenny's Home Assistant
+ * dashboards: the systems he automated, with a little life in them.
+ * Illustrative states only, no real data and nothing about security.
+ */
+const tiles = [
+  { id: 'solar', title: 'Solar', state: 'Producing', icon: 'M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8', tone: 'sun' },
+  { id: 'car', title: 'Car', state: 'Charging on solar', icon: 'M5 16.5h14M6.5 16.5v2M17.5 16.5v2M4 16.5v-4l2-5h12l2 5v4M4 12.5h16', tone: 'mint' },
+  { id: 'climate', title: 'Climate', state: '5 zones', icon: 'M10 14.5V5a2 2 0 1 1 4 0v9.5a4 4 0 1 1-4 0ZM12 11v6', tone: 'red' },
+  { id: 'lights', title: 'Lights', state: 'Evening scene', icon: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3Z', tone: 'sun' },
+  { id: 'pool', title: 'Pool', state: 'Filter running', icon: 'M3 15c1.5 1.3 3 1.3 4.5 0s3-1.3 4.5 0 3 1.3 4.5 0 3-1.3 4.5 0M3 19c1.5 1.3 3 1.3 4.5 0s3-1.3 4.5 0 3 1.3 4.5 0 3-1.3 4.5 0M8 12V5a2 2 0 0 1 4 0M16 12V5', tone: 'blue' },
+  { id: 'agenda', title: 'Family agenda', state: 'School day', icon: 'M4.5 6h15v14h-15zM4.5 10h15M8.5 3.5v4M15.5 3.5v4', tone: 'mint' },
+];
+---
+
+<figure class="tablet" aria-label="Illustration of my wall-tablet dashboard in Home Assistant">
+  <div class="screen">
+    <div class="mb-3 flex items-center justify-between px-1">
+      <span class="text-sm font-bold text-white">Home</span>
+      <span class="text-xs text-white/45">Home Assistant</span>
+    </div>
+    <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+      {
+        tiles.map((t) => (
+          <div class:list={['tile', t.tone, t.id]}>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d={t.icon} />
+            </svg>
+            <span class="mt-3 block text-[0.8rem] font-semibold text-white">{t.title}</span>
+            <span class="block text-[0.72rem] text-white/55">{t.state}</span>
+            {t.id === 'car' && <span class="meter" aria-hidden="true"><span /></span>}
+            {t.id === 'climate' && (
+              <span class="zones" aria-hidden="true">
+                <span /><span /><span /><span /><span />
+              </span>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <figcaption class="mt-3 text-center text-sm text-muted">The dashboard on my wall tablet, simplified</figcaption>
+</figure>
+
+<style>
+  .tablet {
+    margin: 0;
+  }
+  .screen {
+    background: #111827;
+    border: 10px solid #0b0f17;
+    border-radius: 18px;
+    padding: 0.9rem;
+    box-shadow: 0 18px 40px -18px rgb(17 24 39 / 0.55);
+  }
+  .tile {
+    position: relative;
+    overflow: hidden;
+    background: #1f2937;
+    border-radius: 10px;
+    padding: 0.75rem 0.8rem 0.85rem;
+  }
+  .icon {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sun .icon {
+    color: #f5c451;
+  }
+  .mint .icon {
+    color: #7fd1b9;
+  }
+  .red .icon {
+    color: #e06b62;
+  }
+  .blue .icon {
+    color: #5fb3e6;
+  }
+
+  /* car: charge meter */
+  .meter {
+    display: block;
+    height: 4px;
+    margin-top: 0.55rem;
+    background: #374151;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .meter span {
+    display: block;
+    height: 100%;
+    width: 72%;
+    background: #7fd1b9;
+  }
+  /* climate: five zones, one active */
+  .zones {
+    display: flex;
+    gap: 4px;
+    margin-top: 0.55rem;
+  }
+  .zones span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #374151;
+  }
+  .zones span:nth-child(2),
+  .zones span:nth-child(4) {
+    background: #e06b62;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .solar .icon {
+      animation: spin 14s linear infinite;
+    }
+    .meter span {
+      animation: charge 4s ease-in-out infinite;
+    }
+    .pool .icon {
+      animation: bob 2.4s ease-in-out infinite;
+    }
+    .zones span:nth-child(2) {
+      animation: blink 2s ease-in-out infinite;
+    }
+    .lights .icon {
+      animation: glow 3s ease-in-out infinite;
+    }
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes charge {
+    0% {
+      width: 35%;
+    }
+    80%,
+    100% {
+      width: 80%;
+    }
+  }
+  @keyframes bob {
+    50% {
+      transform: translateY(2px);
+    }
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @keyframes glow {
+    50% {
+      filter: drop-shadow(0 0 4px #f5c451);
+    }
+  }
+  .solar .icon {
+    transform-origin: 50% 50%;
+  }
+</style>

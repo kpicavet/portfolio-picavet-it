@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import EnergyFlow from './EnergyFlow.astro';
+import HomeTablet from './HomeTablet.astro';
 
 // Drop a photo at src/assets/kenny.jpg (or .jpeg/.png/.webp) and it replaces the placeholder.
 const found = Object.values(
@@ -38,15 +38,14 @@ const photo = found?.default;
           </p>
           <p>
             At home I’m my own client. The house runs on Home Assistant: the solar panels, charging the
-            car, heating and cooling, the lights. I designed the dashboards myself and set up the AI that
-            helps me maintain it, with strict rules about what it may change. A lot of what I now do at
-            clients, I tried there first.
+            car, heating and cooling, the lights. I build and maintain all of it with Claude Code, from the
+            automations to the dashboards on the wall tablet.
           </p>
         </div>
       </div>
     </div>
 
-    <EnergyFlow />
+    <HomeTablet />
   </div>
 </section>
 

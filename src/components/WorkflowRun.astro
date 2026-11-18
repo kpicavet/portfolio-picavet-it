@@ -1,0 +1,163 @@
+---
+/**
+ * An illustration of Kenny's AI-assisted workflow running: each step ticks off
+ * in turn, the human review stands out, then the run starts over.
+ * Without JS (or with reduced motion) every step is shown as done.
+ */
+const steps = [
+  { label: 'Analyse', detail: 'Reads the old screen and its API' },
+  { label: 'Build', detail: 'Angular, standalone components and Signals' },
+  { label: 'Test', detail: 'Unit tests next to the code' },
+  { label: 'Review', detail: 'Every change, by me', human: true },
+  { label: 'Merge', detail: 'Pull request merged' },
+];
+---
+
+<figure class="run cut-corner" data-run aria-label="Illustration: the AI-assisted workflow, from analysis to a merged pull request">
+  <figcaption class="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4 text-sm">
+    <span class="font-semibold text-white">Rebuilding a screen</span>
+    <span class="flex items-center gap-2 text-white/55">
+      <img src="/tech-claude.svg" alt="" width="16" height="16" class="claude" />
+      Claude Code
+    </span>
+  </figcaption>
+
+  <ol class="space-y-1 px-4 py-4">
+    {
+      steps.map((s) => (
+        <li class:list={['step done', { human: s.human }]}>
+          <span class="dot" aria-hidden="true">
+            <svg viewBox="0 0 16 16" class="tick">
+              <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+            </svg>
+          </span>
+          <span class="min-w-0">
+            <span class="block font-semibold text-white">{s.label}</span>
+            <span class="block text-sm text-white/55">{s.detail}</span>
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+
+<style>
+  .run {
+    --cut: 36px;
+    background: #1f2937;
+    box-shadow: inset 0 0 0 1px #374151;
+    padding-bottom: 1.25rem;
+  }
+  .claude {
+    width: 16px;
+    height: 16px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0.7rem 0.75rem;
+    border-radius: 6px;
+    opacity: 0.4;
+    transition:
+      opacity 0.35s,
+      background-color 0.35s;
+  }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2px #4b5563;
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .tick {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: #1d2a26;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 14;
+    stroke-dashoffset: 14;
+    transition: stroke-dashoffset 0.35s 0.1s;
+  }
+
+  /* running */
+  .step.active {
+    opacity: 1;
+    background: rgb(255 255 255 / 0.05);
+  }
+  .step.active .dot {
+    box-shadow: inset 0 0 0 2px #7fd1b9;
+    animation: pulse 1s ease-in-out infinite;
+  }
+  /* done */
+  .step.done {
+    opacity: 1;
+  }
+  .step.done .dot {
+    background: #7fd1b9;
+    box-shadow: none;
+  }
+  .step.done .tick {
+    stroke-dashoffset: 0;
+  }
+  /* the human step is the one that matters */
+  .step.human.active,
+  .step.human.done {
+    background: rgb(172 57 49 / 0.22);
+  }
+  .step.human.done .dot {
+    background: #ac3931;
+  }
+  .step.human.done .tick {
+    stroke: #fff;
+  }
+
+  @keyframes pulse {
+    50% {
+      box-shadow: inset 0 0 0 2px #7fd1b9, 0 0 0 5px rgb(127 209 185 / 0.18);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .step,
+    .dot,
+    .tick {
+      transition: none;
+    }
+    .step.active .dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-run]').forEach((run) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const steps = [...run.querySelectorAll<HTMLElement>('.step')];
+    let i = 0;
+
+    const render = () => {
+      steps.forEach((s, j) => {
+        s.classList.toggle('done', j < i);
+        s.classList.toggle('active', j === i);
+      });
+    };
+    const tick = () => {
+      i += 1;
+      render();
+      // the review step takes a bit longer, and the finished run lingers
+      const wait = i > steps.length ? 2600 : steps[i - 1]?.classList.contains('human') ? 1500 : 1000;
+      if (i > steps.length) i = -1;
+      window.setTimeout(tick, wait);
+    };
+    render();
+    window.setTimeout(tick, 900);
+  });
+</script>
