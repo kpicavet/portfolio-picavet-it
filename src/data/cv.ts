@@ -55,11 +55,11 @@ export const experience: Experience[] = [
       'Backend and frontend work on the BSS platform: the system behind Citymesh’s subscriptions, customers and services.',
     highlights: [
       'Integrated the BSS with Citymesh’s new in-house mobile network core for a new SME subscription, so it could be sold, activated and managed from the existing platform.',
-      'Built the BSS side of the advanced voicemail feature.',
+      'Built a steady stream of new features across the BSS, end to end: backend, frontend and the integrations with the systems around it.',
       'Now rebuilding the BSS frontend in Angular.',
       'Designed the AI-assisted workflow the rebuild runs on: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a human review at every step. Since then I’m the person the team asks about working with AI.',
     ],
-    stack: ['Angular', 'TypeScript', 'C#', '.NET', 'REST', 'Claude Code'],
+    stack: ['Angular', 'TypeScript', 'Tailwind', 'C#', '.NET', 'REST', 'Kafka', 'Claude Code'],
   },
   {
     company: 'VAB',
@@ -117,7 +117,7 @@ export const experience: Experience[] = [
 ];
 
 export const skills = {
-  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Jest'],
+  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Jest', 'Vitest'],
   Backend: ['C#', '.NET Core', 'ASP.NET MVC / Web API', 'Entity Framework', 'SQL Server', 'REST'],
   'Platform & tooling': ['Azure', 'Azure DevOps', 'Docker', 'Git', 'SonarQube', 'Sitecore (headless)'],
   'AI-assisted engineering': ['Claude Code', 'Designing skill & agent workflows', 'Reviewing AI-written code'],
