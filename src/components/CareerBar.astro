@@ -5,7 +5,7 @@
  * same 30° cut as the stems of the logo.
  */
 import { experience } from '../data/cv';
-import { formatPeriod, toYear } from '../lib/dates';
+import { formatPeriod, toEndYear, toYear } from '../lib/dates';
 import { slug } from '../lib/slug';
 
 interface Props {
@@ -25,7 +25,7 @@ const segments = experience
       freelance: Boolean(job.freelance),
       current: role.period.to === null,
       start: toYear(role.period.from),
-      end: toYear(role.period.to),
+      end: toEndYear(role.period.to),
       label: formatPeriod(role.period),
     })),
   )
@@ -41,7 +41,7 @@ const companies = experience
   .map((job) => ({
     name: job.company,
     start: Math.min(...job.roles.map((r) => toYear(r.period.from))),
-    end: Math.max(...job.roles.map((r) => toYear(r.period.to))),
+    end: Math.max(...job.roles.map((r) => toEndYear(r.period.to))),
   }))
   .filter((c) => c.end - c.start >= 1.5)
   .sort((a, b) => a.start - b.start);
@@ -106,8 +106,12 @@ const labelPos = (start: number, isLast: boolean) => (isLast && pct(start) > 75 
     position: absolute;
     top: 0;
     height: 100%;
-    /* thin gap between roles, so promotions stay visible */
-    border-right: 2px solid var(--paper, #fff);
+    /* thin gap at the start of every role, so each change (incl. promotions)
+       shows the same 2px seam; wider gaps are real time off between jobs */
+    border-left: 2px solid var(--paper, #fff);
+  }
+  .seg:first-child {
+    border-left: 0;
   }
   .emp {
     background: var(--red, #ac3931);
@@ -116,7 +120,6 @@ const labelPos = (start: number, isLast: boolean) => (isLast && pct(start) > 75 
     background: var(--mint, #7fd1b9);
   }
   .current {
-    border-right: 0;
     clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
   }
   .labels,

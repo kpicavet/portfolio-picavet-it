@@ -47,7 +47,7 @@ export const profile = {
 export const experience: Experience[] = [
   {
     company: 'Citymesh',
-    location: 'Belgium',
+    location: 'Sint-Niklaas',
     url: 'https://www.citymesh.com',
     freelance: true,
     roles: [{ title: 'Full-Stack Engineer', period: { from: '2025-01', to: null } }],
