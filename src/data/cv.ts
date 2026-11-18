@@ -117,7 +117,7 @@ export const experience: Experience[] = [
 ];
 
 export const skills = {
-  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Angular Material', 'Transloco / ngx-translate', 'Jest', 'Vitest', 'Karma / Jasmine', 'ESLint / Prettier'],
+  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Angular Material', 'Transloco / ngx2011translate', 'Jest', 'Vitest', 'Karma / Jasmine', 'ESLint / Prettier'],
   Backend: ['C#', '.NET Core', 'ASP.NET MVC / Web API', 'Entity Framework', 'SQL Server', 'REST', 'Swagger / OpenAPI'],
   'Platform & tooling': ['Azure', 'Azure Functions', 'Azure DevOps', 'Docker', 'Git', 'SonarQube', 'Sitecore (headless)'],
   'AI-assisted engineering': ['Claude Code', 'Designing skill & agent workflows', 'Reviewing AI-written code'],

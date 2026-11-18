@@ -84,40 +84,38 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         }
       </section>
 
-      <section class="keep">
-        <h2>Skills</h2>
-        {
-          Object.entries(skills).map(([group, items]) => (
-            <div class="row">
-              <p class="label">{group}</p>
-              <p>{items.join(', ')}</p>
-            </div>
-          ))
-        }
-        <div class="row">
-          <p class="label">Languages</p>
-          <p>{profile.languages.join(', ')}</p>
+      <section class="two-col">
+        <div>
+          <h2>Skills</h2>
+          <dl class="skills">
+            {
+              Object.entries(skills).map(([group, items]) => (
+                <div>
+                  <dt>{group}</dt>
+                  <dd>{items.join(', ')}</dd>
+                </div>
+              ))
+            }
+          </dl>
         </div>
-      </section>
-
-      <section class="keep">
-        <h2>Education &amp; conferences</h2>
-        {
-          education.map((e) => (
-            <div class="row">
-              <p class="label year">{formatMonth(e.period.from).slice(-4)}–{e.period.to && formatMonth(e.period.to).slice(-4)}</p>
-              <p><strong>{e.degree}</strong>, {e.school}</p>
-            </div>
-          ))
-        }
-        {
-          learning.map((l) => (
-            <div class="row">
-              <p class="label year">{l.year}</p>
-              <p>{l.title}</p>
-            </div>
-          ))
-        }
+        <div>
+          <h2>Education</h2>
+          {
+            education.map((e) => (
+              <p class="item">
+                <strong>{e.degree}</strong>
+                <br />
+                {e.school}, <span class="nowrap">{formatMonth(e.period.from).slice(-4)}–{e.period.to && formatMonth(e.period.to).slice(-4)}</span>
+              </p>
+            ))
+          }
+          <h2>Conferences</h2>
+          <ul class="plain">
+            {learning.map((l) => <li><span class="year">{l.year}</span>{l.title}</li>)}
+          </ul>
+          <h2>Languages</h2>
+          <p class="item">{profile.languages.join(', ')}</p>
+        </div>
       </section>
     </main>
 
@@ -345,26 +343,43 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         font-size: 9pt;
       }
 
-      /* same two-column grid as the jobs, so the whole CV reads as one system */
-      .row {
+      .two-col {
         display: grid;
-        grid-template-columns: 30mm 1fr;
-        gap: 0 6mm;
-        padding: 1.2mm 0;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 0 10mm;
+        break-inside: avoid;
       }
-      .row p {
+      .skills {
         margin: 0;
       }
-      .label {
+      .skills div {
+        margin-bottom: 2.5mm;
+      }
+      .skills dt {
         font-weight: 650;
       }
-      .label.year {
-        font-weight: 400;
+      .skills dd {
+        margin: 0;
+      }
+      .nowrap {
+        white-space: nowrap;
+      }
+      .item {
+        margin: 0 0 2mm;
+      }
+      .plain {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .plain li {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 1.5mm;
+      }
+      .year {
         color: var(--muted);
         font-variant-numeric: tabular-nums;
-      }
-      .keep {
-        break-inside: avoid;
       }
 
       @media (max-width: 640px) {
@@ -375,7 +390,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
           text-align: left;
         }
         .job,
-        .row {
+        .two-col {
           grid-template-columns: 1fr;
         }
         .meta {
