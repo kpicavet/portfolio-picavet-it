@@ -1,0 +1,157 @@
+---
+/**
+ * "From code to product": a small Angular component (about Kenny himself)
+ * appears line by line, then renders into the card it describes.
+ * Runs once on load; without JS or with reduced motion everything is shown.
+ */
+const lines: string[] = [
+  `<span class="k">@Component</span>({`,
+  `  selector: <span class="s">'app-developer'</span>,`,
+  `  template: <span class="s">\`&lt;h3&gt;{{ name }}&lt;/h3&gt; …\`</span>,`,
+  `})`,
+  `<span class="k">export class</span> <span class="t">DeveloperComponent</span> {`,
+  `  name = <span class="s">'Kenny Picavet'</span>;`,
+  `  stack = <span class="f">signal</span>([<span class="s">'Angular'</span>, <span class="s">'.NET'</span>, <span class="s">'AI'</span>]);`,
+  `}`,
+];
+---
+
+<div class="c2p" data-c2p>
+  <figure class="code" aria-label="An Angular component describing Kenny Picavet">
+    <figcaption class="flex items-center justify-between border-b border-white/10 px-5 py-3 text-sm text-white/60">
+      <span>developer.component.ts</span>
+      <img src="/tech-angular.svg" alt="" width="16" height="16" class="h-4 w-4" />
+    </figcaption>
+    <pre class="px-5 py-4"><code>{lines.map((l) => <span class="line" set:html={l} />)}</code></pre>
+  </figure>
+
+  <div class="card cut-corner" aria-hidden="true">
+    <span class="avatar">KP</span>
+    <div class="min-w-0">
+      <p class="font-bold text-[#1d2a26]">Kenny Picavet</p>
+      <p class="mt-1.5 flex flex-wrap gap-1.5">
+        <span class="chip">Angular</span><span class="chip">.NET</span><span class="chip">AI</span>
+      </p>
+    </div>
+  </div>
+  <span class="rendered" aria-hidden="true">↓ rendered</span>
+</div>
+
+<style>
+  .c2p {
+    position: relative;
+    padding-bottom: 6rem;
+  }
+  .code {
+    margin: 0;
+    background: #1f2937;
+    border-radius: 10px;
+    box-shadow:
+      inset 0 0 0 1px #374151,
+      0 20px 40px -20px rgb(0 0 0 / 0.6);
+  }
+  pre {
+    margin: 0;
+    overflow-x: auto;
+    font: 0.86rem/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #e5e7eb;
+  }
+  .line {
+    display: block;
+    white-space: pre;
+  }
+  .code :global(.k) {
+    color: #f08a82;
+  }
+  .code :global(.s) {
+    color: #7fd1b9;
+  }
+  .code :global(.t) {
+    color: #f5c451;
+  }
+  .code :global(.f) {
+    color: #8ab4f8;
+  }
+
+  .card {
+    --cut: 24px;
+    position: absolute;
+    right: -0.75rem;
+    bottom: 0;
+    width: min(78%, 21rem);
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.1rem 1.15rem;
+    background: #f3f6f4;
+    box-shadow: 0 18px 36px -14px rgb(0 0 0 / 0.55);
+  }
+  .avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #ac3931;
+    color: #fff;
+    font-weight: 800;
+  }
+  .chip {
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    background: rgb(127 209 185 / 0.35);
+    color: #1d2a26;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .rendered {
+    position: absolute;
+    bottom: 5.6rem;
+    right: calc(min(78%, 21rem) - 6.5rem);
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    background: #7fd1b9;
+    color: #1d2a26;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  /* the one-off animation, driven by the .play class set from JS */
+  @media (prefers-reduced-motion: no-preference) {
+    .c2p.play .line {
+      opacity: 0;
+      transform: translateX(-6px);
+      animation: type-in 0.35s ease-out forwards;
+      animation-delay: calc(var(--i) * 0.22s + 0.2s);
+    }
+    .c2p.play .card,
+    .c2p.play .rendered {
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+      animation: render 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      animation-delay: calc(var(--n) * 0.22s + 0.55s);
+    }
+  }
+  @keyframes type-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes render {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-c2p]').forEach((el) => {
+    const lines = el.querySelectorAll<HTMLElement>('.line');
+    lines.forEach((l, i) => l.style.setProperty('--i', String(i)));
+    el.style.setProperty('--n', String(lines.length));
+    el.classList.add('play');
+  });
+</script>
