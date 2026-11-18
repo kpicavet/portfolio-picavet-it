@@ -34,14 +34,12 @@ export const expertise = [
 export const technologies = [
   { name: 'Angular', logo: 'angular', color: '#dd0031' },
   { name: 'TypeScript', logo: 'typescript', color: '#3178c6' },
-  { name: 'RxJS', logo: 'rxjs', color: '#b7178c' },
   { name: 'Nx', logo: 'nx', color: '#5b8fd8', mono: true },
   { name: 'Tailwind', logo: 'tailwind', color: '#06b6d4' },
   { name: 'C#', logo: 'csharp', color: '#9b4f96' },
   { name: '.NET', logo: 'dotnet', color: '#512bd4' },
   { name: 'SQL Server', logo: 'sqlserver', color: '#cc2927' },
   { name: 'Azure DevOps', logo: 'azuredevops', color: '#0078d7' },
-  { name: 'Docker', logo: 'docker', color: '#2496ed' },
   { name: 'Git', logo: 'git', color: '#f05032' },
   { name: 'Claude Code', logo: 'claude', color: '#d97757' },
 ];

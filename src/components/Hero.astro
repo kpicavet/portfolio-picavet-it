@@ -11,12 +11,12 @@ const builds = [
 
 <section class="hero relative overflow-hidden text-white">
   <div class="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-20 pb-24 sm:px-6 md:pt-24 md:pb-28 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
-    <div>
+    <div class="min-w-0">
       <h1 class="text-[clamp(3rem,8.5vw,6.5rem)] leading-[0.92] font-extrabold tracking-[-0.035em]">
         {profile.name}
       </h1>
       <p class="mt-6 text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold text-white/80">
-        Freelance Angular &amp; .NET developer from Beveren.
+        Freelance Angular &amp; .NET developer from Beveren, with 15+ years of experience.
       </p>
 
       <p class="builds mt-8 text-[clamp(1.6rem,3.4vw,2.6rem)] leading-tight font-extrabold tracking-tight" data-builds>
@@ -45,7 +45,9 @@ const builds = [
       </div>
     </div>
 
-    <CodeToProduct />
+    <div class="min-w-0">
+      <CodeToProduct />
+    </div>
   </div>
 </section>
 
