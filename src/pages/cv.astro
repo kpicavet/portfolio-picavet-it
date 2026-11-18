@@ -1,0 +1,412 @@
+---
+import '@fontsource-variable/archivo/standard.css';
+import CareerBar from '../components/CareerBar.astro';
+import { profile, experience, skills, education, learning } from '../data/cv';
+import { formatPeriod, formatMonth } from '../lib/dates';
+
+const pdfPath = '/kenny-picavet-cv.pdf';
+const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{profile.name} – CV</title>
+    <meta name="description" content={`CV of ${profile.name}, ${profile.headline}.`} />
+    <link rel="canonical" href={new URL('/cv', Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <nav class="toolbar" aria-label="CV actions">
+      <a href="/">Back to picavet-it.com</a>
+      <a href={pdfPath} download class="primary">Download PDF</a>
+    </nav>
+
+    <main class="sheet">
+      <header class="head">
+        <div>
+          <h1>{profile.name}</h1>
+          <p class="headline">{profile.headline}</p>
+          <p class="sub">Freelance, based in {profile.location}</p>
+        </div>
+        <ul class="contact">
+          <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+          <li><a href={`tel:${profile.phone.replace(/\s/g, '')}`}>{profile.phone}</a></li>
+          <li><a href={profile.website}>{host(profile.website)}</a></li>
+          <li><a href={profile.linkedin}>linkedin.com/in/kenny-picavet</a></li>
+        </ul>
+      </header>
+
+      <p class="summary">{profile.summary}</p>
+
+      <section class="timeline" aria-label="Career overview">
+        <CareerBar compact />
+        <p class="legend">
+          <span class="key emp"></span>Employed
+          <span class="key free"></span>Freelance
+        </p>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+        {
+          experience.map((job) => (
+            <article class="job">
+              <div class="meta">
+                <p class="company">{job.company}</p>
+                <p>{job.location}</p>
+                {job.freelance && <p>Freelance</p>}
+              </div>
+              <div class="body">
+                {job.roles.map((role) => (
+                  <h3>
+                    {role.title}
+                    <span class="period">{formatPeriod(role.period)}</span>
+                  </h3>
+                ))}
+                <p>{job.summary}</p>
+                {job.highlights.length > 0 && (
+                  <ul class="highlights">
+                    {job.highlights.map((h) => (
+                      <li>{h}</li>
+                    ))}
+                  </ul>
+                )}
+                <p class="stack">{job.stack.join(', ')}</p>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+
+      <section class="two-col">
+        <div>
+          <h2>Skills</h2>
+          <dl class="skills">
+            {
+              Object.entries(skills).map(([group, items]) => (
+                <div>
+                  <dt>{group}</dt>
+                  <dd>{items.join(', ')}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+        <div>
+          <h2>Education</h2>
+          {
+            education.map((e) => (
+              <p class="item">
+                <strong>{e.degree}</strong>
+                <br />
+                {e.school}, {formatMonth(e.period.from).slice(-4)}–{e.period.to && formatMonth(e.period.to).slice(-4)}
+              </p>
+            ))
+          }
+          <h2>Conferences</h2>
+          <ul class="plain">
+            {learning.map((l) => <li><span class="year">{l.year}</span>{l.title}</li>)}
+          </ul>
+          <h2>Languages</h2>
+          <p class="item">{profile.languages.join(', ')}</p>
+        </div>
+      </section>
+    </main>
+
+    <style is:global>
+      :root {
+        --cv-paper: #ffffff;
+        --cv-ink: #1d2a26;
+        --cv-muted: #56655f;
+        --cv-line: #d5ded9;
+        --cv-red: #ac3931;
+        --cv-mint: #7fd1b9;
+        --cv-mint-deep: #2f7d68;
+        --cv-bg: #e8eeeb;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        background: var(--cv-bg);
+        color: var(--cv-ink);
+        font-family: 'Archivo Variable', system-ui, sans-serif;
+        font-size: 10pt;
+        line-height: 1.45;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body {
+        margin: 0;
+        padding: 16px;
+      }
+      a {
+        color: inherit;
+        text-decoration-color: var(--cv-mint);
+        text-underline-offset: 2px;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--cv-red);
+        outline-offset: 2px;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .toolbar {
+        max-width: 210mm;
+        margin: 0 auto 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 11pt;
+      }
+      .toolbar a {
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+      }
+      .toolbar .primary {
+        background: var(--cv-red);
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .sheet {
+        max-width: 210mm;
+        margin: 0 auto;
+        padding: 16mm 16mm 14mm;
+        background: var(--cv-paper);
+        box-shadow: 0 1px 3px rgb(29 42 38 / 0.12);
+      }
+
+      .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      h1 {
+        margin: 0;
+        font-size: 30pt;
+        line-height: 1;
+        font-weight: 800;
+        font-stretch: 125%;
+        letter-spacing: -0.01em;
+        color: var(--cv-red);
+      }
+      .headline {
+        margin: 6px 0 0;
+        font-size: 13pt;
+        font-weight: 600;
+        font-stretch: 110%;
+      }
+      .sub {
+        margin: 2px 0 0;
+        color: var(--cv-muted);
+      }
+      .contact {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: right;
+        font-size: 9pt;
+      }
+      .summary {
+        margin: 7mm 0 6mm;
+        font-size: 10.5pt;
+        max-width: 68ch;
+      }
+
+      .timeline {
+        margin-bottom: 4mm;
+      }
+      .legend {
+        margin: 2px 0 0;
+        font-size: 8pt;
+        color: var(--cv-muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .key {
+        display: inline-block;
+        width: 10px;
+        height: 6px;
+      }
+      .key.emp {
+        background: var(--cv-red);
+      }
+      .key.free {
+        background: var(--cv-mint);
+        margin-left: 10px;
+      }
+
+      h2 {
+        margin: 6mm 0 3mm;
+        padding-bottom: 1.5mm;
+        font-size: 12pt;
+        font-weight: 750;
+        font-stretch: 125%;
+        border-bottom: 2px solid var(--cv-ink);
+      }
+
+      .job {
+        display: grid;
+        grid-template-columns: 30mm 1fr;
+        gap: 0 6mm;
+        padding: 3mm 0;
+        break-inside: avoid;
+      }
+      .job + .job {
+        border-top: 1px solid var(--cv-line);
+      }
+      .meta p {
+        margin: 0;
+        color: var(--cv-muted);
+        font-size: 9pt;
+      }
+      .meta .company {
+        color: var(--cv-ink);
+        font-size: 11pt;
+        font-weight: 700;
+        font-stretch: 112%;
+      }
+      h3 {
+        margin: 0 0 1mm;
+        font-size: 10.5pt;
+        font-weight: 650;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .period {
+        font-weight: 400;
+        color: var(--cv-muted);
+        font-size: 9pt;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .body > p {
+        margin: 1.5mm 0;
+      }
+      .highlights {
+        margin: 1.5mm 0;
+        padding-left: 0;
+        list-style: none;
+      }
+      .highlights li {
+        position: relative;
+        padding-left: 12px;
+        margin: 1mm 0;
+      }
+      /* the square from the logo, as bullet */
+      .highlights li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.55em;
+        width: 5px;
+        height: 5px;
+        background: var(--cv-red);
+      }
+      .stack {
+        color: var(--cv-mint-deep);
+        font-size: 9pt;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 0 10mm;
+        break-inside: avoid;
+      }
+      .skills {
+        margin: 0;
+      }
+      .skills div {
+        margin-bottom: 2.5mm;
+      }
+      .skills dt {
+        font-weight: 650;
+      }
+      .skills dd {
+        margin: 0;
+      }
+      .item {
+        margin: 0 0 2mm;
+      }
+      .plain {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .plain li {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 1.5mm;
+      }
+      .year {
+        color: var(--cv-muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      @media (max-width: 640px) {
+        .sheet {
+          padding: 20px 16px;
+        }
+        .contact {
+          text-align: left;
+        }
+        .job,
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+        .meta {
+          display: flex;
+          gap: 8px;
+          align-items: baseline;
+          margin-bottom: 4px;
+        }
+        h3 {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+
+      /* margins on @page so every page (not just the first) gets them */
+      @page {
+        size: A4;
+        margin: 13mm 15mm 12mm;
+      }
+      @media print {
+        html {
+          background: #fff;
+        }
+        body {
+          padding: 0;
+        }
+        .toolbar {
+          display: none;
+        }
+        .sheet {
+          max-width: none;
+          box-shadow: none;
+          padding: 0;
+        }
+        a {
+          text-decoration: none;
+        }
+      }
+    </style>
+  </body>
+</html>

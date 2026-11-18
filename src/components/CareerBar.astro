@@ -1,0 +1,139 @@
+---
+/**
+ * Career on a true time scale: every role is a segment whose width is its
+ * duration. Red = employed, mint = freelance. The red square marks "now",
+ * borrowed from the square in the logo.
+ */
+import { experience } from '../data/cv';
+import { formatPeriod, toYear } from '../lib/dates';
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+
+const segments = experience
+  .flatMap((job) =>
+    job.roles.map((role) => ({
+      company: job.company,
+      title: role.title,
+      freelance: Boolean(job.freelance),
+      start: toYear(role.period.from),
+      end: toYear(role.period.to),
+      label: formatPeriod(role.period),
+    })),
+  )
+  .sort((a, b) => a.start - b.start);
+
+const first = Math.floor(segments[0].start);
+const last = Math.max(...segments.map((s) => s.end));
+const span = last - first;
+const pct = (year: number) => ((year - first) / span) * 100;
+
+// Group consecutive roles at the same company for the labels underneath
+const companies = experience
+  .map((job) => ({
+    name: job.company,
+    start: Math.min(...job.roles.map((r) => toYear(r.period.from))),
+    end: Math.max(...job.roles.map((r) => toYear(r.period.to))),
+  }))
+  .filter((c) => c.end - c.start >= 1.5); // too short to label legibly
+
+const ticks = [first, 2016, 2021, 2025].filter((y) => y >= first);
+---
+
+<figure class:list={['career', { compact }]} aria-label="Career timeline">
+  <div class="track">
+    {
+      segments.map((s) => (
+        <span
+          class:list={['seg', s.freelance ? 'free' : 'emp']}
+          style={`left:${pct(s.start)}%;width:${pct(s.end) - pct(s.start)}%`}
+          title={`${s.title}, ${s.company} (${s.label})`}
+        />
+      ))
+    }
+    <span class="now" style={`left:${pct(last)}%`} aria-hidden="true"></span>
+  </div>
+  <div class="labels" aria-hidden="true">
+    {
+      companies.map((c) => (
+        <span style={`left:${pct(c.start)}%;width:${pct(c.end) - pct(c.start)}%`}>{c.name}</span>
+      ))
+    }
+  </div>
+  <div class="ticks" aria-hidden="true">
+    {ticks.map((y) => <span style={`left:${pct(y)}%`}>{y}</span>)}
+    <span class="end" style="left:100%">now</span>
+  </div>
+  <figcaption class="sr-only">
+    {segments.map((s) => `${s.title} at ${s.company}, ${s.label}.`).join(' ')}
+  </figcaption>
+</figure>
+
+<style>
+  .career {
+    --h: 14px;
+    margin: 0;
+    position: relative;
+    /* keep room on the right for the "now" square */
+    padding-right: calc(var(--h) * 2 + 4px);
+  }
+  .career.compact {
+    --h: 8px;
+  }
+  .track {
+    position: relative;
+    height: var(--h);
+  }
+  .seg {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    /* hairline gap between roles so promotions stay visible */
+    box-shadow: inset -2px 0 0 var(--cv-paper, #f3f6f4);
+  }
+  .emp {
+    background: var(--cv-red, #ac3931);
+  }
+  .free {
+    background: var(--cv-mint, #7fd1b9);
+  }
+  .now {
+    position: absolute;
+    top: calc(var(--h) * -0.5);
+    width: calc(var(--h) * 2);
+    height: calc(var(--h) * 2);
+    margin-left: 4px;
+    background: var(--cv-red, #ac3931);
+  }
+  .labels,
+  .ticks {
+    position: relative;
+    height: 1.4em;
+  }
+  .labels span {
+    position: absolute;
+    top: 0.35em;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .ticks span {
+    position: absolute;
+    top: 0.2em;
+    transform: translateX(-50%);
+    color: var(--cv-muted, #56655f);
+    font-variant-numeric: tabular-nums;
+  }
+  .ticks span:first-child {
+    transform: none;
+  }
+  .ticks .end {
+    transform: translateX(-100%);
+  }
+  .compact .labels,
+  .compact .ticks {
+    font-size: 8pt;
+  }
+</style>
