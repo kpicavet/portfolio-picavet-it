@@ -204,3 +204,68 @@ export const learning = [
   { year: '2019', title: 'AngularConnect' },
   { year: '2018', title: 'NG-BE + workshop: Angular Architecture Patterns' },
 ];
+
+/*
+  Expertise and technologies, each with the periods they were in use.
+  Shown on the site as mini timelines on the same scale as the career bar.
+  Periods: 'YYYY-MM', to: null = still using it.
+*/
+export interface Period {
+  from: string;
+  to: string | null;
+}
+
+export const expertise: { title: string; icon: string; lead: string; body: string; periods: Period[] }[] = [
+  {
+    title: 'Frontend',
+    icon: 'layout',
+    lead: 'Angular since the early days.',
+    body: 'I rewrote Rydoo’s WebForms app into an Angular SPA and co-built its component library. At VAB I rebuilt and launched vab.be in Angular SSR. I care about code a team can keep working in.',
+    periods: [{ from: '2016-07', to: null }],
+  },
+  {
+    title: 'Backend',
+    icon: 'server',
+    lead: 'C# and .NET since 2012.',
+    body: 'Web APIs, backend-for-frontend layers, SQL Server, Kafka, and integrations with whatever the business runs on: Exact Online, Sitecore, and at Citymesh a brand-new mobile network core.',
+    periods: [{ from: '2012-05', to: null }],
+  },
+  {
+    title: 'Technical leadership',
+    icon: 'compass',
+    lead: 'Standards, reviews, and the bigger picture.',
+    body: 'Tech lead for Rydoo’s Angular application: code standards, reviews and the move to an Nx monorepo as the team grew. At Citymesh I proposed how to rebuild the BSS frontend.',
+    periods: [
+      { from: '2021-08', to: '2022-06' },
+      { from: '2025-01', to: null },
+    ],
+  },
+  {
+    title: 'Working with AI',
+    icon: 'spark',
+    lead: 'The AI drafts, I decide what ships.',
+    body: 'I designed the workflow our frontend rebuild runs on: a chain of Claude Code skills from analysis to a merged pull request, with a review at every step. Colleagues now come to me to work this way too.',
+    periods: [{ from: '2025-01', to: null }],
+  },
+];
+
+export type TechGroup = 'Frontend' | 'Backend' | 'Platform & AI';
+
+export const technologies: { name: string; group: TechGroup; color: string; periods: Period[] }[] = [
+  { name: 'Angular', group: 'Frontend', color: '#dd0031', periods: [{ from: '2016-07', to: null }] },
+  { name: 'TypeScript', group: 'Frontend', color: '#3178c6', periods: [{ from: '2016-07', to: null }] },
+  { name: 'RxJS', group: 'Frontend', color: '#b7178c', periods: [{ from: '2016-07', to: null }] },
+  { name: 'NgRx', group: 'Frontend', color: '#ba2bd2', periods: [{ from: '2016-07', to: '2022-06' }] },
+  { name: 'Storybook', group: 'Frontend', color: '#ff4785', periods: [{ from: '2016-07', to: '2022-06' }] },
+  { name: 'Nx', group: 'Frontend', color: 'var(--ink)', periods: [{ from: '2021-08', to: '2024-12' }] },
+  { name: 'Tailwind', group: 'Frontend', color: '#06b6d4', periods: [{ from: '2022-07', to: null }] },
+  { name: 'C#', group: 'Backend', color: '#9b4f96', periods: [{ from: '2012-05', to: null }] },
+  { name: '.NET', group: 'Backend', color: '#512bd4', periods: [{ from: '2012-05', to: null }] },
+  { name: 'SQL Server', group: 'Backend', color: '#cc2927', periods: [{ from: '2012-05', to: '2022-06' }] },
+  { name: 'Sitecore', group: 'Backend', color: '#eb1f1f', periods: [{ from: '2022-07', to: '2024-12' }] },
+  { name: 'Kafka', group: 'Backend', color: 'var(--ink)', periods: [{ from: '2025-01', to: null }] },
+  { name: 'Git', group: 'Platform & AI', color: '#f05032', periods: [{ from: '2012-05', to: null }] },
+  { name: 'Azure DevOps', group: 'Platform & AI', color: '#0078d7', periods: [{ from: '2016-07', to: '2024-12' }] },
+  { name: 'Docker', group: 'Platform & AI', color: '#2496ed', periods: [{ from: '2021-08', to: '2022-06' }] },
+  { name: 'Claude Code', group: 'Platform & AI', color: '#d97757', periods: [{ from: '2025-01', to: null }] },
+];

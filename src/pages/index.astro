@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import Work from '../components/Work.astro';
+import Expertise from '../components/Expertise.astro';
+import TechStack from '../components/TechStack.astro';
 import CareerExplorer from '../components/CareerExplorer.astro';
 import AtHome from '../components/AtHome.astro';
 import About from '../components/About.astro';
@@ -25,7 +26,8 @@ const personJsonLd = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
   <Hero />
   <CareerExplorer />
-  <Work />
+  <Expertise />
+  <TechStack />
   <AtHome />
   <About />
   <Contact />
