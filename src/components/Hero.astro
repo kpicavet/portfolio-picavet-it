@@ -24,7 +24,7 @@ const builds = [
         <span class="rotator">
           {
             builds.map((b, i) => (
-              <span class:list={['word', { on: i === 0 }]}>
+              <span class:list={['word', { on: i === 0 }]} data-phase={b.id}>
                 {b.text}
               </span>
             ))
@@ -77,14 +77,30 @@ const builds = [
 </style>
 
 <script>
-  // "I build …" cycles through what Kenny builds.
+  // The sentence ("I build …") and the code window on the right move together:
+  // every phase shows the matching word, then the matching code and its result.
   const words = [...document.querySelectorAll<HTMLElement>('[data-builds] .word')];
+  const phases = [...document.querySelectorAll<HTMLElement>('[data-c2p] .phase')];
+  const ids = words.map((w) => w.dataset.phase!);
   let index = 0;
-  const show = (i: number) => words.forEach((w, j) => w.classList.toggle('on', j === i));
+
+  const show = (i: number) => {
+    index = i;
+    words.forEach((w, j) => w.classList.toggle('on', j === i));
+    phases.forEach((p) => {
+      const on = p.dataset.phase === ids[i];
+      p.classList.toggle('on', on);
+      if (on) {
+        // restart the typing animation for this phase
+        p.classList.remove('play');
+        void p.offsetWidth;
+        p.classList.add('play');
+      }
+    });
+  };
+
+  show(0);
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    window.setInterval(() => {
-      index = (index + 1) % words.length;
-      show(index);
-    }, 2600);
+    window.setInterval(() => show((index + 1) % ids.length), 5200);
   }
 </script>
