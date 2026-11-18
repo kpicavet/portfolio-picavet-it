@@ -1,0 +1,56 @@
+---
+import { profile } from '../data/cv';
+
+const field =
+  'mt-1.5 w-full rounded-md border border-line bg-paper px-3 py-2.5 text-ink placeholder:text-muted/70 focus:border-ink focus:outline-none';
+---
+
+<section id="contact" class="border-t border-line bg-surface">
+  <div class="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:gap-16 md:py-28">
+    <div>
+      <h2 class="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl">Get in touch</h2>
+      <p class="max-w-[46ch] text-lg leading-relaxed text-muted">
+        I work with companies directly and through agencies. Tell me about the project and the team, and
+        I’ll get back to you.
+      </p>
+
+      <a
+        href={`mailto:${profile.email}`}
+        class="mt-8 inline-block text-[clamp(1.35rem,3vw,2rem)] font-bold break-all text-accent-text underline decoration-2 underline-offset-[6px]"
+      >
+        {profile.email}
+      </a>
+
+      <dl class="mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
+        <dt class="text-muted">Phone</dt>
+        <dd><a href={`tel:${profile.phone.replace(/\s/g, '')}`} class="hover:underline">{profile.phone}</a></dd>
+        <dt class="text-muted">LinkedIn</dt>
+        <dd><a href={profile.linkedin} class="hover:underline" target="_blank" rel="noopener noreferrer">kenny-picavet</a></dd>
+        <dt class="text-muted">GitHub</dt>
+        <dd><a href={profile.github} class="hover:underline" target="_blank" rel="noopener noreferrer">kpicavet</a></dd>
+      </dl>
+    </div>
+
+    <form name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company-website" class="space-y-5">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden">
+        <label>Leave this empty <input name="company-website" tabindex="-1" autocomplete="off" /></label>
+      </p>
+      <div>
+        <label for="name" class="font-semibold">Name</label>
+        <input id="name" name="name" required autocomplete="name" class={field} />
+      </div>
+      <div>
+        <label for="email" class="font-semibold">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="email" class={field} />
+      </div>
+      <div>
+        <label for="message" class="font-semibold">Message</label>
+        <textarea id="message" name="message" rows="5" required class={field}></textarea>
+      </div>
+      <button type="submit" class="rounded-md bg-red px-5 py-3 font-semibold text-white hover:bg-[#962f28]">
+        Send message
+      </button>
+    </form>
+  </div>
+</section>

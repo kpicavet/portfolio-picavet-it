@@ -1,16 +1,21 @@
 ---
 /**
  * Career on a true time scale: every role is a segment whose width is its
- * duration. Red = employed, mint = freelance. The red square marks "now",
- * borrowed from the square in the logo.
+ * duration. Red = employed, mint = freelance. The current role ends in the
+ * same 30° cut as the stems of the logo.
  */
 import { experience } from '../data/cv';
 import { formatPeriod, toYear } from '../lib/dates';
+import { slug } from '../lib/slug';
 
 interface Props {
   compact?: boolean;
+  /** draw the bar once on page load (respects reduced motion) */
+  animate?: boolean;
+  /** turn company labels into links to #job-<company> */
+  linked?: boolean;
 }
-const { compact = false } = Astro.props;
+const { compact = false, animate = false, linked = false } = Astro.props;
 
 const segments = experience
   .flatMap((job) =>
@@ -18,6 +23,7 @@ const segments = experience
       company: job.company,
       title: role.title,
       freelance: Boolean(job.freelance),
+      current: role.period.to === null,
       start: toYear(role.period.from),
       end: toYear(role.period.to),
       label: formatPeriod(role.period),
@@ -30,54 +36,64 @@ const last = Math.max(...segments.map((s) => s.end));
 const span = last - first;
 const pct = (year: number) => ((year - first) / span) * 100;
 
-// Group consecutive roles at the same company for the labels underneath
+// One label per company, only where there is room for it
 const companies = experience
   .map((job) => ({
     name: job.company,
     start: Math.min(...job.roles.map((r) => toYear(r.period.from))),
     end: Math.max(...job.roles.map((r) => toYear(r.period.to))),
   }))
-  .filter((c) => c.end - c.start >= 1.5); // too short to label legibly
+  .filter((c) => c.end - c.start >= 1.5)
+  .sort((a, b) => a.start - b.start);
 
-const ticks = [first, 2016, 2021, 2025].filter((y) => y >= first);
+// keep ticks clear of the 'now' label at the end
+const ticks = [first, 2016, 2021].filter((y) => y >= first && y < last - 1.5);
+
+// the last label hugs the right edge so it never runs off the bar
+const labelPos = (start: number, isLast: boolean) => (isLast && pct(start) > 75 ? 'right:0' : `left:${pct(start)}%`);
 ---
 
-<figure class:list={['career', { compact }]} aria-label="Career timeline">
-  <div class="track">
+<figure class:list={['career', { compact, animate }]}>
+  <div class="track" aria-hidden="true">
     {
       segments.map((s) => (
         <span
-          class:list={['seg', s.freelance ? 'free' : 'emp']}
-          style={`left:${pct(s.start)}%;width:${pct(s.end) - pct(s.start)}%`}
+          class:list={['seg', s.freelance ? 'free' : 'emp', { current: s.current }]}
+          style={`left:${pct(s.start)}%;width:${pct(s.end) - pct(s.start)}%;--d:${(pct(s.start) / 100) * 0.9}s`}
           title={`${s.title}, ${s.company} (${s.label})`}
         />
       ))
     }
-    <span class="now" style={`left:${pct(last)}%`} aria-hidden="true"></span>
   </div>
-  <div class="labels" aria-hidden="true">
+  <div class="labels">
     {
-      companies.map((c) => (
-        <span style={`left:${pct(c.start)}%;width:${pct(c.end) - pct(c.start)}%`}>{c.name}</span>
-      ))
+      companies.map((c, i) =>
+        linked ? (
+          <a href={`#job-${slug(c.name)}`} style={labelPos(c.start, i === companies.length - 1)}>
+            {c.name}
+          </a>
+        ) : (
+          <span style={labelPos(c.start, i === companies.length - 1)} aria-hidden="true">
+            {c.name}
+          </span>
+        ),
+      )
     }
   </div>
   <div class="ticks" aria-hidden="true">
     {ticks.map((y) => <span style={`left:${pct(y)}%`}>{y}</span>)}
-    <span class="end" style="left:100%">now</span>
+    <span class="end">now</span>
   </div>
   <figcaption class="sr-only">
-    {segments.map((s) => `${s.title} at ${s.company}, ${s.label}.`).join(' ')}
+    Career timeline. {segments.map((s) => `${s.title} at ${s.company}, ${s.label}.`).join(' ')}
   </figcaption>
 </figure>
 
 <style>
   .career {
-    --h: 14px;
+    --h: 18px;
+    --slant: calc(var(--h) * 0.577); /* tan 30° */
     margin: 0;
-    position: relative;
-    /* keep room on the right for the "now" square */
-    padding-right: calc(var(--h) * 2 + 4px);
   }
   .career.compact {
     --h: 8px;
@@ -90,50 +106,62 @@ const ticks = [first, 2016, 2021, 2025].filter((y) => y >= first);
     position: absolute;
     top: 0;
     height: 100%;
-    /* hairline gap between roles so promotions stay visible */
-    box-shadow: inset -2px 0 0 var(--cv-paper, #f3f6f4);
+    /* thin gap between roles, so promotions stay visible */
+    border-right: 2px solid var(--paper, #fff);
   }
   .emp {
-    background: var(--cv-red, #ac3931);
+    background: var(--red, #ac3931);
   }
   .free {
-    background: var(--cv-mint, #7fd1b9);
+    background: var(--mint, #7fd1b9);
   }
-  .now {
-    position: absolute;
-    top: calc(var(--h) * -0.5);
-    width: calc(var(--h) * 2);
-    height: calc(var(--h) * 2);
-    margin-left: 4px;
-    background: var(--cv-red, #ac3931);
+  .current {
+    border-right: 0;
+    clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
   }
   .labels,
   .ticks {
     position: relative;
-    height: 1.4em;
+    height: 1.6em;
   }
-  .labels span {
+  .labels > * {
     position: absolute;
-    top: 0.35em;
-    font-weight: 600;
+    top: 0.4em;
+    font-weight: 650;
     white-space: nowrap;
-    overflow: hidden;
+  }
+  .labels a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--line, #d5ded9);
+    text-underline-offset: 3px;
+  }
+  .labels a:hover {
+    text-decoration-color: currentColor;
   }
   .ticks span {
     position: absolute;
-    top: 0.2em;
-    transform: translateX(-50%);
-    color: var(--cv-muted, #56655f);
+    top: 0.25em;
+    color: var(--muted, #56655f);
     font-variant-numeric: tabular-nums;
   }
-  .ticks span:first-child {
-    transform: none;
-  }
   .ticks .end {
-    transform: translateX(-100%);
+    right: 0;
   }
   .compact .labels,
   .compact .ticks {
     font-size: 8pt;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .animate .seg {
+      transform-origin: left center;
+      animation: draw 0.35s cubic-bezier(0.3, 0.7, 0.4, 1) var(--d) both;
+    }
+  }
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
   }
 </style>

@@ -1,20 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import USP from '../components/USP.astro';
-import Technologies from '../components/Technologies.astro';
-import Projects from '../components/Projects.astro';
-import ContactForm from '../components/ContactForm.astro';
+import Work from '../components/Work.astro';
+import Experience from '../components/Experience.astro';
 import AboutMe from '../components/AboutMe.astro';
+import Contact from '../components/Contact.astro';
+import { profile } from '../data/cv';
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: profile.headline,
+  email: `mailto:${profile.email}`,
+  url: profile.website,
+  sameAs: [profile.linkedin, profile.github],
+  address: { '@type': 'PostalAddress', addressLocality: 'Beveren', addressCountry: 'BE' },
+  worksFor: { '@type': 'Organization', name: 'Picavet IT', url: profile.website },
+};
 ---
 
-<Layout title="Picavet IT">
-  <main class="pt-[72px]">
-    <Hero />
-    <USP />
-    <Technologies />
-    <Projects />
-    <AboutMe />
-    <ContactForm />
-  </main>
+<Layout title="Kenny Picavet, freelance Angular & .NET engineer">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+  <Hero />
+  <Work />
+  <Experience />
+  <AboutMe />
+  <Contact />
 </Layout>

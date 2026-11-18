@@ -1,0 +1,49 @@
+---
+const areas = [
+  {
+    title: 'Frontend',
+    body:
+      'Angular since the early days: I rewrote Rydoo’s WebForms app into an Angular SPA, co-built its component library and later led the frontend on an Nx monorepo. At VAB I built the new vab.be with Angular SSR on a headless CMS. I care about code a team can keep working in.',
+  },
+  {
+    title: 'Backend',
+    body:
+      'Thirteen years of C# and .NET: Web APIs, backend-for-frontend layers, SQL Server, and integrations with whatever the business runs on. Exact Online, Dropbox, Sitecore, and at Citymesh a brand-new mobile network core.',
+  },
+  {
+    title: 'Working with AI',
+    body:
+      'At Citymesh I designed the workflow our frontend rebuild runs on: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a review at every step. The AI drafts, I decide what ships. Colleagues now come to me when they want to work this way too.',
+  },
+];
+---
+
+<section id="work" class="border-t border-line">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-[1fr_2fr] md:gap-16 md:py-28">
+    <h2 class="text-3xl font-extrabold tracking-tight md:text-4xl">What I do</h2>
+    <div class="space-y-12">
+      {
+        areas.map((a) => (
+          <div class="max-w-[62ch]">
+            <h3 class="mb-3 flex items-center gap-3 text-xl font-bold">
+              <span class="stem" aria-hidden="true" />
+              {a.title}
+            </h3>
+            <p class="text-lg leading-relaxed text-muted">{a.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* a tiny stem from the logo: vertical bar ending in a 30° cut */
+  .stem {
+    display: inline-block;
+    width: 6px;
+    height: 20px;
+    background: var(--red);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3.46px), 0 100%);
+  }
+</style>

@@ -1,75 +1,34 @@
 ---
 import { Image } from 'astro:assets';
 import family from '../assets/family.jpg';
-
-const facts = [
-  "Being an Anderlecht fan these days is like a test of patience—thank goodness for snacks during the games!",
-  "I have a secret talent for creating elaborate LEGO structures that would make any architect proud (or at least my kids!).",
-  "I'm currently working on a new project that has me excited and buzzing with ideas—let's just say it involves some clever coding magic!",
-  "When you hear me chuckling at my code, just know I'm laughing off the bugs!",
-];
 ---
 
-<section id="about" class="py-20 bg-white dark:bg-gray-900">
-  <div class="container mx-auto px-4">
-    <h2
-      class="text-3xl font-bold text-center mb-12 text-primary dark:text-secondary"
-    >
-      Hello, World! I'm Kenny
-    </h2>
-    <div class="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
-      <div class="lg:w-1/4 w-full flex justify-center lg:sticky lg:top-24">
-        <div class="relative inline-block">
-          <Image
-            src={family}
-            alt="Kenny Picavet with his family"
-            width={512}
-            height={512}
-            class="rounded-full shadow-lg w-64 h-64 object-cover"
-          />
-        </div>
-      </div>
-      <div class="lg:w-3/4">
-        <div class="space-y-4 mb-8">
-          <p class="text-gray-700 dark:text-gray-300">
-            When I'm not wrestling with code or chasing down elusive bugs,
-            you'll find me cheering on my two energetic boys. My 10-year-old is
-            a budding basketball star, always perfecting his shots, while my
-            5-year-old loves to kick the ball around as he dreams of becoming a
-            football pro. Our weekends are filled with laughter and competition
-            as we support each other on and off the field.
-          </p>
-          <p class="text-gray-700 dark:text-gray-300">
-            I have a knack for enjoying good meals, and there's nothing quite
-            like a night out at a restaurant. Whether it's a cozy family dinner
-            or a fun night out, I relish the simple pleasure of enjoying
-            familiar favorites without the hassle of cooking!
-          </p>
-          <p class="text-gray-700 dark:text-gray-300">
-            And when the creative urge strikes, I dive into my LEGO collection.
-            We love picking out fun sets and building them together—because who
-            doesn't enjoy following the instructions to create something
-            awesome?
-          </p>
-        </div>
-
-        <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h4
-            class="text-lg font-semibold mb-4 text-primary dark:text-secondary"
-          >
-            Fun Facts About Me:
-          </h4>
-          <ul class="space-y-2 text-gray-700 dark:text-gray-300 list-none pl-0">
-            {
-              facts.map((fact) => (
-                <li class="flex">
-                  <span class="mr-2">•</span>
-                  <span>{fact}</span>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
+<section id="about" class="border-t border-line">
+  <div class="mx-auto grid max-w-6xl items-start gap-10 px-4 py-20 sm:px-6 md:grid-cols-[1fr_2fr] md:gap-16 md:py-28">
+    <Image
+      src={family}
+      alt="Kenny Picavet with his family"
+      widths={[320, 640]}
+      sizes="(min-width: 768px) 320px, 100vw"
+      class="aspect-[4/5] w-full max-w-xs rounded-md object-cover"
+    />
+    <div class="max-w-[62ch]">
+      <h2 class="mb-6 text-3xl font-extrabold tracking-tight md:text-4xl">Outside of work</h2>
+      <div class="space-y-4 text-lg leading-relaxed text-muted">
+        <p>
+          I live in Beveren with my family. Most weekends I’m on the sidelines: my eldest plays
+          basketball, my youngest is set on becoming a football pro.
+        </p>
+        <p>
+          When it’s quiet, we build LEGO together, following the instructions, mostly. I’d rather eat
+          out than cook. And I’ve supported Anderlecht long enough to have learned a lot about patience.
+        </p>
+        <p>
+          My first real project, as an intern in 2011, was a CV generator: consultants entered their
+          experience once and got a clean CV in one click. This site works the same way. The page you’re
+          reading and <a href="/cv" class="text-ink underline underline-offset-4">my CV</a> come from one
+          data file.
+        </p>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://www.picavet-it.com',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.endsWith('/thanks/') })],
   vite: {
     plugins: [tailwindcss()],
   },

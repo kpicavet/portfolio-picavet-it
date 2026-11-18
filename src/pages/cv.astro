@@ -26,10 +26,13 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
 
     <main class="sheet">
       <header class="head">
-        <div>
+        <div class="id">
+          <img src="/logo.svg" alt="Picavet IT logo" class="mark" width="54" height="72" />
+          <div>
           <h1>{profile.name}</h1>
           <p class="headline">{profile.headline}</p>
           <p class="sub">Freelance, based in {profile.location}</p>
+          </div>
         </div>
         <ul class="contact">
           <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
@@ -102,7 +105,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
               <p class="item">
                 <strong>{e.degree}</strong>
                 <br />
-                {e.school}, {formatMonth(e.period.from).slice(-4)}–{e.period.to && formatMonth(e.period.to).slice(-4)}
+                {e.school}, <span class="nowrap">{formatMonth(e.period.from).slice(-4)}–{e.period.to && formatMonth(e.period.to).slice(-4)}</span>
               </p>
             ))
           }
@@ -118,21 +121,21 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
 
     <style is:global>
       :root {
-        --cv-paper: #ffffff;
-        --cv-ink: #1d2a26;
-        --cv-muted: #56655f;
-        --cv-line: #d5ded9;
-        --cv-red: #ac3931;
-        --cv-mint: #7fd1b9;
-        --cv-mint-deep: #2f7d68;
-        --cv-bg: #e8eeeb;
+        --paper: #ffffff;
+        --ink: #1d2a26;
+        --muted: #56655f;
+        --line: #d5ded9;
+        --red: #ac3931;
+        --mint: #7fd1b9;
+        --mint-deep: #2f7d68;
+        --bg: #e8eeeb;
       }
       * {
         box-sizing: border-box;
       }
       html {
-        background: var(--cv-bg);
-        color: var(--cv-ink);
+        background: var(--bg);
+        color: var(--ink);
         font-family: 'Archivo Variable', system-ui, sans-serif;
         font-size: 10pt;
         line-height: 1.45;
@@ -145,11 +148,11 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
       }
       a {
         color: inherit;
-        text-decoration-color: var(--cv-mint);
+        text-decoration-color: var(--mint);
         text-underline-offset: 2px;
       }
       a:focus-visible {
-        outline: 2px solid var(--cv-red);
+        outline: 2px solid var(--red);
         outline-offset: 2px;
       }
       .sr-only {
@@ -175,7 +178,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         text-decoration: none;
       }
       .toolbar .primary {
-        background: var(--cv-red);
+        background: var(--red);
         color: #fff;
         font-weight: 600;
       }
@@ -184,7 +187,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         max-width: 210mm;
         margin: 0 auto;
         padding: 16mm 16mm 14mm;
-        background: var(--cv-paper);
+        background: var(--paper);
         box-shadow: 0 1px 3px rgb(29 42 38 / 0.12);
       }
 
@@ -195,24 +198,31 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         gap: 24px;
         flex-wrap: wrap;
       }
+      .id {
+        display: flex;
+        align-items: center;
+        gap: 5mm;
+      }
+      .mark {
+        height: 19mm;
+        width: auto;
+      }
       h1 {
         margin: 0;
         font-size: 30pt;
         line-height: 1;
         font-weight: 800;
-        font-stretch: 125%;
-        letter-spacing: -0.01em;
-        color: var(--cv-red);
+        letter-spacing: -0.025em;
+        color: var(--red);
       }
       .headline {
         margin: 6px 0 0;
         font-size: 13pt;
         font-weight: 600;
-        font-stretch: 110%;
       }
       .sub {
         margin: 2px 0 0;
-        color: var(--cv-muted);
+        color: var(--muted);
       }
       .contact {
         list-style: none;
@@ -233,7 +243,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
       .legend {
         margin: 2px 0 0;
         font-size: 8pt;
-        color: var(--cv-muted);
+        color: var(--muted);
         display: flex;
         align-items: center;
         gap: 6px;
@@ -244,10 +254,10 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         height: 6px;
       }
       .key.emp {
-        background: var(--cv-red);
+        background: var(--red);
       }
       .key.free {
-        background: var(--cv-mint);
+        background: var(--mint);
         margin-left: 10px;
       }
 
@@ -256,8 +266,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         padding-bottom: 1.5mm;
         font-size: 12pt;
         font-weight: 750;
-        font-stretch: 125%;
-        border-bottom: 2px solid var(--cv-ink);
+        border-bottom: 2px solid var(--ink);
       }
 
       .job {
@@ -268,18 +277,17 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         break-inside: avoid;
       }
       .job + .job {
-        border-top: 1px solid var(--cv-line);
+        border-top: 1px solid var(--line);
       }
       .meta p {
         margin: 0;
-        color: var(--cv-muted);
+        color: var(--muted);
         font-size: 9pt;
       }
       .meta .company {
-        color: var(--cv-ink);
+        color: var(--ink);
         font-size: 11pt;
         font-weight: 700;
-        font-stretch: 112%;
       }
       h3 {
         margin: 0 0 1mm;
@@ -291,7 +299,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
       }
       .period {
         font-weight: 400;
-        color: var(--cv-muted);
+        color: var(--muted);
         font-size: 9pt;
         white-space: nowrap;
         font-variant-numeric: tabular-nums;
@@ -309,18 +317,19 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         padding-left: 12px;
         margin: 1mm 0;
       }
-      /* the square from the logo, as bullet */
+      /* bullet: a tiny logo stem, ending in a 30° cut */
       .highlights li::before {
         content: '';
         position: absolute;
         left: 0;
-        top: 0.55em;
-        width: 5px;
-        height: 5px;
-        background: var(--cv-red);
+        top: 0.42em;
+        width: 3.5px;
+        height: 8px;
+        background: var(--red);
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2px), 0 100%);
       }
       .stack {
-        color: var(--cv-mint-deep);
+        color: var(--mint-deep);
         font-size: 9pt;
       }
 
@@ -342,6 +351,9 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
       .skills dd {
         margin: 0;
       }
+      .nowrap {
+        white-space: nowrap;
+      }
       .item {
         margin: 0 0 2mm;
       }
@@ -356,7 +368,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         margin-bottom: 1.5mm;
       }
       .year {
-        color: var(--cv-muted);
+        color: var(--muted);
         font-variant-numeric: tabular-nums;
       }
 

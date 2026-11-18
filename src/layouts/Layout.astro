@@ -10,7 +10,7 @@ interface Props {
 
 const {
   title,
-  description = 'Kenny Picavet — freelance senior Angular & .NET engineer based in Belgium. 13+ years building web products for Rydoo, VAB and Citymesh.',
+  description = 'Kenny Picavet: freelance senior Angular & .NET engineer in Belgium. 13+ years building web products for Rydoo, VAB and Citymesh.',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -26,6 +26,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#f3f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16211e" media="(prefers-color-scheme: dark)" />
     <meta name="generator" content={Astro.generator} />
 
     <meta property="og:type" content="website" />
@@ -34,13 +36,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-
     <script is:inline>
       (function () {
         let theme = null;
@@ -48,15 +43,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           theme = localStorage.getItem('theme');
         } catch {}
         if (theme !== 'light' && theme !== 'dark') {
-          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
         document.documentElement.classList.toggle('dark', theme === 'dark');
       })();
     </script>
+    <slot name="head" />
   </head>
-  <body class="font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+  <body class="font-sans bg-paper text-ink antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-surface focus:px-3 focus:py-2"
+      >Skip to content</a
+    >
     <Header />
-    <slot />
+    <main id="main">
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
