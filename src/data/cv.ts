@@ -1,5 +1,8 @@
 /**
  * Single source of truth for Kenny's CV.
+ *
+ * `skills` is the complete inventory (what recruiters search on).
+ * `stack` per job lists only that job's key technologies (shows recency).
  * The website (timeline, about, skills) and the downloadable PDF are both
  * generated from this file — edit here, everything else follows.
  *
@@ -59,7 +62,7 @@ export const experience: Experience[] = [
       'Now rebuilding the BSS frontend in Angular.',
       'Designed the AI-assisted workflow the rebuild runs on: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a human review at every step. Since then I’m the person the team asks about working with AI.',
     ],
-    stack: ['Angular', 'TypeScript', 'Tailwind', 'C#', '.NET', 'REST', 'Kafka', 'Claude Code'],
+    stack: ['Angular (Signals, standalone components, Reactive Forms)', 'TypeScript', 'Tailwind', 'C#', '.NET', 'Kafka', 'Claude Code'],
   },
   {
     company: 'VAB',
@@ -74,7 +77,7 @@ export const experience: Experience[] = [
       'Worked in an Nx workspace with Tailwind, delivering within a SAFe release train.',
       'Contributed to the C# / ASP.NET backend and Web APIs feeding the frontend.',
     ],
-    stack: ['Angular', 'TypeScript', 'Nx', 'RxJS', 'SSR', 'Tailwind', 'C#', 'ASP.NET MVC', 'Sitecore', 'Azure DevOps'],
+    stack: ['Angular SSR', 'Nx', 'RxJS', 'Tailwind', 'Core Web Vitals', 'C#', 'ASP.NET MVC', 'Sitecore'],
   },
   {
     company: 'Rydoo',
@@ -94,7 +97,7 @@ export const experience: Experience[] = [
       'Built the backend-for-frontend in .NET Core, shaping core APIs into endpoints the frontend could use directly.',
       'Built integrations with Dropbox, Evernote, Octopus and Exact Online for exchanging expenses and receipts.',
     ],
-    stack: ['Angular', 'TypeScript', 'NgRx', 'RxJS', 'Nx', 'Jest', 'Storybook', 'C#', '.NET Core', 'ASP.NET', 'SQL Server', 'Entity Framework', 'Docker', 'Azure DevOps'],
+    stack: ['Angular', 'NgRx', 'RxJS', 'Nx', 'Storybook', 'Jest', 'C#', '.NET Core', 'SQL Server', 'Entity Framework'],
   },
   {
     company: 'Vanasoft',
@@ -117,11 +120,75 @@ export const experience: Experience[] = [
 ];
 
 export const skills = {
-  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Angular Material', 'Transloco / ngx‑translate' /* non-breaking hyphen */, 'Jest', 'Vitest', 'Karma / Jasmine', 'ESLint / Prettier'],
-  Backend: ['C#', '.NET Core', 'ASP.NET MVC / Web API', 'Entity Framework', 'SQL Server', 'REST', 'Swagger / OpenAPI'],
-  'Platform & tooling': ['Azure', 'Azure Functions', 'Azure DevOps', 'Docker', 'Git', 'SonarQube', 'Sitecore (headless)'],
-  'AI-assisted engineering': ['Claude Code', 'Designing skill & agent workflows', 'Reviewing AI-written code'],
-  'Ways of working': ['Scrum', 'SAFe', 'Code reviews', 'Technical leadership'],
+  Frontend: [
+    'Angular (Signals, standalone components, Reactive Forms)',
+    'TypeScript',
+    'JavaScript',
+    'RxJS',
+    'NgRx',
+    'Nx monorepos',
+    'SSR',
+    'HTML',
+    'CSS / SCSS',
+    'Tailwind',
+    'Angular Material',
+    'Storybook',
+    'Transloco / ngx‑translate', // non-breaking hyphen
+    'Webpack / esbuild / Vite',
+    'Accessibility (WCAG)',
+    'Web performance (Core Web Vitals)',
+    'Jest',
+    'Vitest',
+    'Karma / Jasmine',
+    'Playwright',
+    'ESLint / Prettier',
+  ],
+  Backend: [
+    'C#',
+    '.NET Core / ASP.NET Core',
+    'ASP.NET MVC / Web API',
+    'Entity Framework (Core)',
+    'LINQ',
+    'SQL Server',
+    'REST',
+    'Swagger / OpenAPI',
+    'SignalR',
+    'Kafka',
+    'Background jobs (Hangfire, hosted services)',
+    'OAuth2 / OpenID Connect, JWT',
+    'xUnit / NUnit',
+    'Moq / NSubstitute',
+  ],
+  'Platform & tooling': [
+    'Azure',
+    'Azure Functions',
+    'Azure DevOps (CI/CD YAML pipelines)',
+    'Application Insights',
+    'Docker',
+    'Git',
+    'SonarQube',
+    'Sitecore (headless)',
+    'Postman',
+    'Jira',
+    'Confluence',
+    'Visual Studio',
+    'VS Code',
+  ],
+  'AI-assisted engineering': [
+    'Claude Code',
+    'Designing skill & agent workflows',
+    'MCP servers',
+    'Prompt engineering',
+    'AI-assisted code review & testing',
+    'Reviewing AI-written code',
+  ],
+  'Ways of working': ['Scrum', 'SAFe', 'Kanban', 'Code reviews', 'Technical leadership'],
+  Domains: [
+    'Telecom (BSS, provisioning, subscriptions)',
+    'Fintech / expense management',
+    'Mobility & roadside assistance',
+    'Warehouse & logistics',
+  ],
 };
 
 export const education = [

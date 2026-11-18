@@ -5,6 +5,8 @@ import { profile, experience, skills, education, learning } from '../data/cv';
 import { formatPeriod, formatMonth } from '../lib/dates';
 
 const pdfPath = '/kenny-picavet-cv.pdf';
+// short skill groups go under Languages so both columns end at about the same height
+const rightColumn = ['Domains'] as const;
 const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 ---
 
@@ -89,7 +91,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
           <h2>Skills</h2>
           <dl class="skills">
             {
-              Object.entries(skills).map(([group, items]) => (
+              Object.entries(skills).filter(([group]) => !rightColumn.includes(group)).map(([group, items]) => (
                 <div>
                   <dt>{group}</dt>
                   <dd>{items.join(', ')}</dd>
@@ -115,6 +117,14 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
           </ul>
           <h2>Languages</h2>
           <p class="item">{profile.languages.join(', ')}</p>
+          {
+            rightColumn.map((group) => (
+              <>
+                <h2>{group}</h2>
+                <p class="item">{skills[group].join(', ')}</p>
+              </>
+            ))
+          }
         </div>
       </section>
     </main>
@@ -262,7 +272,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
       }
 
       h2 {
-        margin: 6mm 0 3mm;
+        margin: 5mm 0 2.5mm;
         padding-bottom: 1.5mm;
         font-size: 12pt;
         font-weight: 750;
@@ -347,6 +357,14 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         display: grid;
         grid-template-columns: 1.3fr 1fr;
         gap: 0 10mm;
+      }
+      /* the block may start on one page and continue on the next,
+         but a heading never ends a page and a skill group stays whole */
+      .two-col h2 {
+        break-after: avoid;
+      }
+      .skills div,
+      .plain li {
         break-inside: avoid;
       }
       .skills {
@@ -360,6 +378,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
       }
       .skills dd {
         margin: 0;
+        font-size: 9.5pt;
       }
       .nowrap {
         white-space: nowrap;
@@ -408,7 +427,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
       /* margins on @page so every page (not just the first) gets them */
       @page {
         size: A4;
-        margin: 13mm 15mm 12mm;
+        margin: 11mm 15mm 10mm;
       }
       @media print {
         html {
