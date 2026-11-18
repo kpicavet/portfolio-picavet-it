@@ -4,24 +4,29 @@
 
 export const expertise = [
   {
-    title: 'Frontend',
+    title: 'Full Stack Expertise',
+    icon: 'layers',
+    text: 'With 15 years of experience, I excel in both front-end and back-end development, ensuring seamless integration and functionality across the entire stack.',
+  },
+  {
+    title: 'Angular Expert',
     icon: 'layout',
-    text: 'Angular since 2016: from rewriting Rydoo’s WebForms app to rebuilding vab.be in Angular SSR.',
+    text: 'As a seasoned Angular developer, I deliver dynamic, responsive, and user-friendly interfaces tailored to your business needs.',
   },
   {
-    title: 'Backend',
-    icon: 'server',
-    text: 'C# and .NET since 2012: Web APIs, backend-for-frontend layers and integrations.',
-  },
-  {
-    title: 'Technical leadership',
+    title: 'Problem-Solver Mindset',
     icon: 'compass',
-    text: 'Tech lead at Rydoo: code standards, reviews and the move to an Nx monorepo.',
+    text: 'I approach each project with a focus on solving complex challenges, providing innovative and efficient solutions to meet unique business goals.',
   },
   {
-    title: 'Working with AI',
+    title: 'Cutting-Edge Solutions',
+    icon: 'rocket',
+    text: 'I stay ahead of industry trends by leveraging the latest technologies and best practices to create modern, future-proof applications.',
+  },
+  {
+    title: 'AI-Assisted Development',
     icon: 'spark',
-    text: 'I designed the Claude Code workflow my team at Citymesh builds with.',
+    text: 'I work with AI tools like Claude Code every day to deliver faster, while every change still gets the review of an experienced developer.',
   },
 ];
 
