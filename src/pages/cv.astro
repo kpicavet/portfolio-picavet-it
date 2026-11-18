@@ -19,6 +19,12 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
     <meta name="description" content={`CV of ${profile.name}, ${profile.headline}.`} />
     <link rel="canonical" href={new URL('/cv', Astro.site)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={`${profile.name} – CV`} />
+    <meta property="og:description" content={`CV of ${profile.name}, ${profile.headline}.`} />
+    <meta property="og:url" content={new URL('/cv', Astro.site)} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <nav class="toolbar" aria-label="CV actions">
