@@ -130,17 +130,20 @@ const tickStyles = flowRow(ticks.map((y) => pct(y)));
   .free {
     background: var(--mint, #7fd1b9);
   }
-  .current {
-    /* the 30° cut is painted over with the page colour (no clip-path: keeps PDF text order intact) */
+  /*
+    The current role ends in the logo's 30° cut: a solid block plus a small SVG
+    triangle. No clip-path (scrambles PDF text order) and no semi-transparent
+    gradients (many PDF viewers render those as solid shapes).
+  */
+  .current.free {
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Crect width='1' height='1' fill='%237fd1b9'/%3E%3C/svg%3E") left / calc(100% - var(--slant)) 100% no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpolygon points='0,0 1,0 0,1' fill='%237fd1b9'/%3E%3C/svg%3E") right / var(--slant) 100% no-repeat;
   }
-  .current::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: var(--slant);
-    height: 100%;
-    background: linear-gradient(to bottom right, transparent 50%, var(--paper, #fff) 50%);
+  .current.emp {
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Crect width='1' height='1' fill='%23ac3931'/%3E%3C/svg%3E") left / calc(100% - var(--slant)) 100% no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpolygon points='0,0 1,0 0,1' fill='%23ac3931'/%3E%3C/svg%3E") right / var(--slant) 100% no-repeat;
   }
   .labels,
   .ticks {
