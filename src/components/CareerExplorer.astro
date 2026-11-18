@@ -33,14 +33,14 @@ const years = (job: (typeof experience)[number]) => {
 
       <div role="tablist" aria-label="Companies" class="tabs mt-8 flex flex-wrap gap-2">
         {
-          experience.map((job, i) => (
+          [...experience].reverse().map((job) => (
             <button
               type="button"
               role="tab"
               id={`tab-${slug(job.company)}`}
               aria-controls={`job-${slug(job.company)}`}
-              aria-selected={i === 0 ? 'true' : 'false'}
-              tabindex={i === 0 ? 0 : -1}
+              aria-selected={job === experience[0] ? 'true' : 'false'}
+              tabindex={job === experience[0] ? 0 : -1}
               data-company={slug(job.company)}
               class="tab"
             >
@@ -199,6 +199,7 @@ const years = (job: (typeof experience)[number]) => {
     );
 
     root.classList.add('ready');
-    select(tabs[0].dataset.company!);
+    // open on the current job (the last tab: tabs run oldest to newest, like the bar)
+    select(tabs[tabs.length - 1].dataset.company!);
   });
 </script>

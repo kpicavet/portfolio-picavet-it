@@ -35,6 +35,9 @@ const segments = experience
 for (let i = 1; i < segments.length; i++) {
   const gap = segments[i].start - segments[i - 1].end;
   if (gap > 0 && gap <= 1 / 12 + 1e-9) segments[i].start = segments[i - 1].end;
+  // a role starting in the month the previous one ended overlaps it: trim, so
+  // dimmed (semi-transparent) segments never stack into darker lines
+  if (gap < 0) segments[i - 1].end = segments[i].start;
 }
 
 const first = Math.floor(segments[0].start);
