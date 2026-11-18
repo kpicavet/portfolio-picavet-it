@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #b33a3a;
-  --color-secondary: #7ed3b2;
+  --color-primary: #ac3931;
+  --color-secondary: #7fd1b9;
   --color-accent: #ffffff;
   --color-accent-foreground: #000000;
 

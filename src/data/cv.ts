@@ -34,13 +34,14 @@ export const profile = {
   website: 'https://www.picavet-it.com',
   linkedin: 'https://www.linkedin.com/in/kenny-picavet-633b3230',
   github: 'https://github.com/kpicavet',
-  languages: ['Dutch (native)', 'English (professional)', '[French?]'],
+  languages: ['Dutch (native)', 'English (professional)'],
   summary:
     'Full-stack engineer with 13+ years in Angular and .NET. I spent ten years at Rydoo, ' +
-    'growing with the product from a three-person team to a scale-up: I rebuilt the frontend ' +
-    'from ASP.NET WebForms to Angular, built the component library and led the frontend as tech ' +
-    'lead on an Nx monorepo. As a freelancer since 2022 I have shipped for VAB and Citymesh. ' +
-    'I work AI-assisted every day, and my experience is what tells me when the AI is wrong.',
+    'growing with the product from a three-person team to an international scale-up: I rebuilt ' +
+    'the frontend from ASP.NET WebForms to Angular, co-built the component library and led the ' +
+    'frontend as tech lead. Freelance since 2022, first at VAB, now at Citymesh, where I work on ' +
+    'both ends of their BSS platform and set up the way the team builds with AI. ' +
+    'I tend to pick up the things nobody owns yet.',
 };
 
 export const experience: Experience[] = [
@@ -50,13 +51,15 @@ export const experience: Experience[] = [
     url: 'https://www.citymesh.com',
     freelance: true,
     roles: [{ title: 'Full-Stack Engineer', period: { from: '2025-01', to: null } }],
-    summary: '[One sentence: what product/team, what problem it solves.]',
+    summary:
+      'Backend and frontend work on the BSS platform: the system behind Citymesh’s subscriptions, customers and services.',
     highlights: [
-      '[What you built or delivered — e.g. a feature, an app, a migration.]',
-      '[A result — faster, fewer bugs, more users, shipped on time.]',
-      'Used Claude Code daily as an AI pair programmer for [e.g. refactoring, tests, exploring unfamiliar backend code], reviewing every change myself.',
+      'Connected the BSS to Citymesh’s own new mobile core for a new SME subscription, so it could be sold, activated and managed from the existing platform.',
+      'Built the BSS side of the advanced voicemail feature.',
+      'Now rebuilding the BSS frontend in Angular.',
+      'Designed the AI-assisted workflow the rebuild runs on: a chain of Claude Code skills that takes each screen from analysis to tested code, with a human review at every step. Since then I’m the person the team asks about working with AI.',
     ],
-    stack: ['Angular', 'TypeScript', '.NET', 'C#', '[database]', '[cloud]'],
+    stack: ['Angular', 'TypeScript', 'C#', '.NET', 'REST', 'Claude Code'],
   },
   {
     company: 'VAB',
@@ -83,7 +86,7 @@ export const experience: Experience[] = [
       { title: '.NET Developer', period: { from: '2012-05', to: '2016-07' } },
     ],
     summary:
-      'Ten years on an expense-management platform, from a three-person team to an international scale-up [~X employees, used by X companies].',
+      'Ten years on an expense-management platform, from a three-person team to an international scale-up.',
     highlights: [
       'Tech lead for the Angular application: set code standards and moved the codebase to an Nx monorepo as the team grew.',
       'Taught myself Angular and led the rewrite of the ASP.NET WebForms/jQuery frontend into a modern Angular SPA.',
@@ -117,7 +120,7 @@ export const skills = {
   Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Jest'],
   Backend: ['C#', '.NET Core', 'ASP.NET MVC / Web API', 'Entity Framework', 'SQL Server', 'REST'],
   'Platform & tooling': ['Azure', 'Azure DevOps', 'Docker', 'Git', 'SonarQube', 'Sitecore (headless)'],
-  'AI-assisted engineering': ['Claude Code', '[GitHub Copilot?]', 'AI-assisted refactoring & testing', 'Prompting & reviewing agent output'],
+  'AI-assisted engineering': ['Claude Code', 'Designing skill & agent workflows', 'Reviewing AI-written code'],
   'Ways of working': ['Scrum', 'SAFe', 'Code reviews', 'Technical leadership'],
 };
 
