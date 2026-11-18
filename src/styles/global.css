@@ -19,13 +19,13 @@
   --accent-text: #ac3931; /* accent used for text: red on light, mint on dark */
 }
 
-/* dark: neutral graphite, so the brand red and mint are the only colour */
+/* dark: the deep slate of the original site, red and mint stay the accents */
 .dark {
-  --paper: #131515;
-  --surface: #1b1e1e;
-  --ink: #edefee;
-  --muted: #9ea6a3;
-  --line: #2b3030;
+  --paper: #111827;
+  --surface: #1f2937;
+  --ink: #f3f4f6;
+  --muted: #9ca3af;
+  --line: #374151;
   --mint-deep: #7fd1b9;
   --accent-text: #7fd1b9;
 }
