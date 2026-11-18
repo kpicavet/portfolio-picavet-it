@@ -54,10 +54,10 @@ export const experience: Experience[] = [
     summary:
       'Backend and frontend work on the BSS platform: the system behind Citymesh’s subscriptions, customers and services.',
     highlights: [
-      'Connected the BSS to Citymesh’s own new mobile core for a new SME subscription, so it could be sold, activated and managed from the existing platform.',
+      'Integrated the BSS with Citymesh’s new in-house mobile network core for a new SME subscription, so it could be sold, activated and managed from the existing platform.',
       'Built the BSS side of the advanced voicemail feature.',
       'Now rebuilding the BSS frontend in Angular.',
-      'Designed the AI-assisted workflow the rebuild runs on: a chain of Claude Code skills that takes each screen from analysis to tested code, with a human review at every step. Since then I’m the person the team asks about working with AI.',
+      'Designed the AI-assisted workflow the rebuild runs on: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a human review at every step. Since then I’m the person the team asks about working with AI.',
     ],
     stack: ['Angular', 'TypeScript', 'C#', '.NET', 'REST', 'Claude Code'],
   },
