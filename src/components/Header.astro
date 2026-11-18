@@ -1,5 +1,5 @@
 ---
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "./ThemeToggle.astro";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -12,11 +12,11 @@ const navItems = [
 ---
 
 <header
-  class="fixed w-full z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md"
+  class="fixed w-full z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xs shadow-md"
 >
   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
     <a href="/" class="flex items-center gap-3 hover:text-primary">
-      <img src="logo.svg" class="w-auto h-10" alt="Logo" />
+      <img src="/logo.svg" class="w-auto h-10" alt="Logo" />
     </a>
     <div class="flex items-center">
       <nav class="hidden md:block mr-4">
@@ -35,7 +35,7 @@ const navItems = [
           }
         </ul>
       </nav>
-      <ThemeToggle client:load />
+      <ThemeToggle />
       <button
         id="menu-toggle"
         class="ml-4 md:hidden text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary"

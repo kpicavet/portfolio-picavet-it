@@ -1,43 +1,56 @@
 ---
+import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = 'Kenny Picavet — freelance senior Angular & .NET engineer based in Belgium. 13+ years building web products for Rydoo, VAB and Citymesh.',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Picavet IT" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/png" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <ViewTransitions />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <script is:inline>
-      (function() {
-        function getInitialColorMode() {
-          const persistedColorPreference = window.localStorage.getItem('theme');
-          const hasPersistedPreference = typeof persistedColorPreference === 'string';
-          if (hasPersistedPreference) {
-            return persistedColorPreference;
-          }
-          const mql = window.matchMedia('(prefers-color-scheme: dark)');
-          const hasMediaQueryPreference = typeof mql.matches === 'boolean';
-          if (hasMediaQueryPreference) {
-            return mql.matches ? 'dark' : 'light';
-          }
-          return 'dark';
+      (function () {
+        let theme = null;
+        try {
+          theme = localStorage.getItem('theme');
+        } catch {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
         }
-        const colorMode = getInitialColorMode();
-        document.documentElement.classList.toggle('dark', colorMode === 'dark');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
       })();
     </script>
   </head>

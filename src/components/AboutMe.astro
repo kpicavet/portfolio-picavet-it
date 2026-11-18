@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import family from '../assets/family.jpg';
+
 const facts = [
   "Being an Anderlecht fan these days is like a test of patience—thank goodness for snacks during the games!",
   "I have a secret talent for creating elaborate LEGO structures that would make any architect proud (or at least my kids!).",
@@ -17,9 +20,11 @@ const facts = [
     <div class="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
       <div class="lg:w-1/4 w-full flex justify-center lg:sticky lg:top-24">
         <div class="relative inline-block">
-          <img
-            src="family.jpg"
-            alt="Kenny Picavet"
+          <Image
+            src={family}
+            alt="Kenny Picavet with his family"
+            width={512}
+            height={512}
             class="rounded-full shadow-lg w-64 h-64 object-cover"
           />
         </div>
