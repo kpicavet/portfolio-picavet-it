@@ -1,5 +1,5 @@
 Technology logos are trademarks of their respective owners, used here only to name the technologies.
 
-- angular, typescript, rxjs, ngrx, storybook, tailwind, csharp, dotnet, sqlserver, git, azuredevops, docker, claude:
+- angular, typescript, rxjs, tailwind, csharp, dotnet, sqlserver, git, azuredevops, docker, claude:
   from Devicon (https://devicon.dev), MIT License, Copyright (c) 2015 konpa.
-- nx, sitecore, kafka: from Simple Icons (https://simpleicons.org), CC0 1.0.
+- nx: from Simple Icons (https://simpleicons.org), CC0 1.0.

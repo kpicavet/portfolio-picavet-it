@@ -1,86 +1,84 @@
 ---
 /**
- * Technologies as a small Gantt chart: every row is a technology on the same
- * 2011 → now scale as the career bar, coloured in the technology's own colour.
+ * The main technologies as logo tiles. On hover or focus a tile fills with
+ * the technology's own colour, cut in the logo's 30° corner.
  */
-import MiniTimeline from './MiniTimeline.astro';
-import { technologies, type TechGroup } from '../data/cv';
-import { periodsLabel } from '../lib/periods';
+import { technologies } from '../data/site';
 
 const files = import.meta.glob<string>('../assets/tech/*.svg', { eager: true, query: '?url', import: 'default' });
-const icon = (name: string) => {
-  const key: Record<string, string> = {
-    Angular: 'angular', TypeScript: 'typescript', RxJS: 'rxjs', NgRx: 'ngrx', Storybook: 'storybook', Nx: 'nx',
-    Tailwind: 'tailwind', 'C#': 'csharp', '.NET': 'dotnet', 'SQL Server': 'sqlserver', Sitecore: 'sitecore',
-    Kafka: 'kafka', Git: 'git', 'Azure DevOps': 'azuredevops', Docker: 'docker', 'Claude Code': 'claude',
-  };
-  return files[`../assets/tech/${key[name]}.svg`];
-};
-// single-colour logos are drawn as a mask, so they follow the theme / brand colour
-const monochrome = new Set(['Nx', 'Kafka', 'Sitecore']);
-
-const groups: TechGroup[] = ['Frontend', 'Backend', 'Platform & AI'];
+const src = (logo: string) => files[`../assets/tech/${logo}.svg`];
 ---
 
 <section id="technologies" class="border-t border-line bg-surface">
   <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
-    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-      <h2 class="text-3xl font-extrabold tracking-tight md:text-4xl">Technologies I work with</h2>
-      <p class="text-muted">And since when.</p>
-    </div>
-
-    <div class="grid gap-x-12 gap-y-10 lg:grid-cols-3">
+    <h2 class="mb-10 text-3xl font-extrabold tracking-tight md:text-4xl">Technologies I work with</h2>
+    <ul class="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
       {
-        groups.map((g) => (
-          <div>
-            <h3 class="mb-4 font-bold">{g}</h3>
-            <ul class="space-y-4">
-              {technologies
-                .filter((t) => t.group === g)
-                .map((t) => {
-                  const label = periodsLabel(t.periods);
-                  return (
-                    <li class="row">
-                      {monochrome.has(t.name) ? (
-                        <span class="logo mask" style={`--src:url("${icon(t.name)}");--c:${t.color}`} aria-hidden="true" />
-                      ) : (
-                        <img class="logo" src={icon(t.name)} alt="" width="28" height="28" loading="lazy" />
-                      )}
-                      <div class="min-w-0">
-                        <div class="flex items-baseline justify-between gap-3">
-                          <span class="font-semibold">{t.name}</span>
-                          <span class="text-sm text-muted tabular-nums">{label}</span>
-                        </div>
-                        <div class="mt-1.5">
-                          <MiniTimeline periods={t.periods} color={t.color} label={`${t.name}: ${label}`} />
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
+        technologies.map((t) => (
+          <li class="tile cut-corner" style={`--c:${t.color}`} tabindex="0">
+            {t.mono ? (
+              <span class="logo mask" style={`--src:url("${src(t.logo)}")`} aria-hidden="true" />
+            ) : (
+              <img class="logo" src={src(t.logo)} alt="" width="44" height="44" loading="lazy" />
+            )}
+            <span class="name">{t.name}</span>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </div>
 </section>
 
 <style>
-  .row {
+  .tile {
+    --cut: 22px;
+    position: relative;
     display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 0.9rem;
-    align-items: center;
+    justify-items: center;
+    gap: 0.75rem;
+    padding: 1.4rem 0.5rem 1.6rem;
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-weight: 600;
+    text-align: center;
+  }
+  .tile::before {
+    /* colour wash in the technology's own colour */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--c);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .tile:hover::before,
+  .tile:focus-visible::before {
+    opacity: 0.14;
+  }
+  .logo,
+  .name {
+    position: relative;
   }
   .logo {
-    width: 28px;
-    height: 28px;
+    width: 44px;
+    height: 44px;
     object-fit: contain;
   }
   .mask {
     display: block;
-    background: var(--c);
+    background: var(--ink);
     mask: var(--src) center / contain no-repeat;
+  }
+  .name {
+    font-size: 0.95rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .logo {
+      transition: transform 0.25s cubic-bezier(0.3, 0.7, 0.4, 1.4);
+    }
+    .tile:hover .logo,
+    .tile:focus-visible .logo {
+      transform: scale(1.12) rotate(-4deg);
+    }
   }
 </style>

@@ -1,7 +1,5 @@
 ---
-import MiniTimeline from './MiniTimeline.astro';
-import { expertise } from '../data/cv';
-import { periodsLabel } from '../lib/periods';
+import { expertise } from '../data/site';
 
 const icons: Record<string, string> = {
   layout: 'M4 4.5h16v15H4zM4 9h16M9 9v10.5',
@@ -9,12 +7,7 @@ const icons: Record<string, string> = {
   compass: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM15.5 8.5l-2 5-5 2 2-5 5-2Z',
   spark: 'M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M6.3 17.7l2.8-2.8M14.9 9.1l2.8-2.8',
 };
-const tones = [
-  { bg: 'bg-mint', fg: 'text-[#1d2a26]', bar: 'var(--mint)' },
-  { bg: 'bg-red', fg: 'text-white', bar: 'var(--red)' },
-  { bg: 'bg-ink', fg: 'text-paper', bar: 'var(--ink)' },
-  { bg: 'bg-mint', fg: 'text-[#1d2a26]', bar: 'var(--mint)' },
-];
+const tones = ['bg-mint text-[#1d2a26]', 'bg-red text-white', 'bg-ink text-paper', 'bg-mint text-[#1d2a26]'];
 ---
 
 <section id="work" class="border-t border-line">
@@ -22,26 +15,17 @@ const tones = [
     <h2 class="mb-10 text-3xl font-extrabold tracking-tight md:text-4xl">Expertise</h2>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
-        expertise.map((e, i) => {
-          const tone = tones[i % tones.length];
-          const label = periodsLabel(e.periods);
-          return (
-            <article class="card cut-corner flex flex-col bg-surface p-6 pb-9">
-              <span class:list={['grid size-11 place-items-center rounded-md', tone.bg, tone.fg]} aria-hidden="true">
-                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d={icons[e.icon]} />
-                </svg>
-              </span>
-              <h3 class="mt-5 text-sm font-semibold text-muted">{e.title}</h3>
-              <p class="mt-1 text-lg leading-snug font-bold">{e.lead}</p>
-              <p class="mt-3 flex-1 leading-relaxed text-muted">{e.body}</p>
-              <div class="mt-6">
-                <MiniTimeline periods={e.periods} color={tone.bar} label={`${e.title}: ${label}`} />
-                <p class="mt-2 text-sm font-semibold tabular-nums">{label}</p>
-              </div>
-            </article>
-          );
-        })
+        expertise.map((e, i) => (
+          <article class="card cut-corner bg-surface p-6 pb-9">
+            <span class:list={['grid size-11 place-items-center rounded-md', tones[i % tones.length]]} aria-hidden="true">
+              <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d={icons[e.icon]} />
+              </svg>
+            </span>
+            <h3 class="mt-5 text-lg font-bold">{e.title}</h3>
+            <p class="mt-2 leading-relaxed text-muted">{e.text}</p>
+          </article>
+        ))
       }
     </div>
   </div>
@@ -49,13 +33,13 @@ const tones = [
 
 <style>
   .card {
-    --cut: 36px;
+    --cut: 32px;
     box-shadow: inset 0 0 0 1px var(--line);
     transition: transform 0.2s;
   }
   @media (prefers-reduced-motion: no-preference) {
     .card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
   }
 </style>
