@@ -59,7 +59,7 @@ export const experience: Experience[] = [
     highlights: [
       'Integrated the BSS with Citymesh’s new in-house mobile network core for a new SME subscription, so it could be sold, activated and managed from the existing platform.',
       'Built a steady stream of new features across the BSS, end to end: backend, frontend and the integrations with the systems around it.',
-      'Rebuilding the BSS frontend in Angular on an AI-assisted workflow I designed: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a human review at every step. Since then I’m the person the team asks about working with AI.',
+      'Proposed how to rebuild the BSS frontend and now carry it out in Angular, on an AI-assisted workflow I designed: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a human review at every step. Since then I’m the person the team asks about working with AI.',
     ],
     stack: ['Angular (Signals, standalone components, Reactive Forms)', 'TypeScript', 'Tailwind', 'C#', '.NET', 'Kafka', 'Claude Code'],
   },
@@ -72,7 +72,8 @@ export const experience: Experience[] = [
     summary:
       'Angular and C# development for one of Belgium’s largest mobility and roadside-assistance organisations.',
     highlights: [
-      'Built the new vab.be website: an Angular SSR frontend on top of Sitecore as headless CMS.',
+      'Rebuilt and launched the new vab.be in Angular SSR, on Sitecore as headless CMS.',
+      'Reworked the insurance ordering wizard end to end, unblocking a flow the business had been stuck on.',
       'Worked in an Nx workspace with Tailwind, delivering within a SAFe release train.',
       'Contributed to the C# / ASP.NET backend and Web APIs feeding the frontend.',
     ],
@@ -112,7 +113,7 @@ export const experience: Experience[] = [
     location: 'Kontich',
     roles: [{ title: 'Intern', period: { from: '2011-01', to: '2011-05' } }],
     summary:
-      'Built a CV generator in Java: consultants entered their experience once and got a consistent, templated CV in one click. (This CV is generated, too.)',
+      'Built a CV generator in Java: consultants entered their experience once and got a consistent, templated CV in one click.',
     highlights: [],
     stack: ['Java', 'iText'],
   },
