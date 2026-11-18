@@ -1,0 +1,136 @@
+/**
+ * Single source of truth for Kenny's CV.
+ * The website (timeline, about, skills) and the downloadable PDF are both
+ * generated from this file — edit here, everything else follows.
+ *
+ * Anything in [square brackets] is a placeholder: replace it with a real
+ * fact or number, or delete the sentence. Never leave a claim you can't
+ * back up in an interview.
+ */
+
+export interface Role {
+  title: string;
+  period: { from: string; to: string | null }; // 'YYYY-MM', null = current
+}
+
+export interface Experience {
+  company: string;
+  location: string;
+  url?: string;
+  freelance?: boolean;
+  roles: Role[]; // newest first; several roles = growth within one company
+  summary: string;
+  highlights: string[];
+  stack: string[];
+}
+
+export const profile = {
+  name: 'Kenny Picavet',
+  headline: 'Senior Angular & .NET Engineer',
+  tagline: 'Freelance · Belgium · 13+ years',
+  location: 'Beveren, Belgium',
+  email: 'kenny@picavet-it.com',
+  phone: '+32 472 22 26 73',
+  website: 'https://www.picavet-it.com',
+  linkedin: 'https://www.linkedin.com/in/kenny-picavet-633b3230',
+  github: 'https://github.com/kpicavet',
+  languages: ['Dutch (native)', 'English (professional)', '[French?]'],
+  summary:
+    'Full-stack engineer with 13+ years in Angular and .NET. I spent ten years at Rydoo, ' +
+    'growing with the product from a three-person team to a scale-up: I rebuilt the frontend ' +
+    'from ASP.NET WebForms to Angular, built the component library and led the frontend as tech ' +
+    'lead on an Nx monorepo. As a freelancer since 2022 I have shipped for VAB and Citymesh. ' +
+    'I work AI-assisted every day, and my experience is what tells me when the AI is wrong.',
+};
+
+export const experience: Experience[] = [
+  {
+    company: 'Citymesh',
+    location: 'Belgium',
+    url: 'https://www.citymesh.com',
+    freelance: true,
+    roles: [{ title: 'Full-Stack Engineer', period: { from: '2025-01', to: null } }],
+    summary: '[One sentence: what product/team, what problem it solves.]',
+    highlights: [
+      '[What you built or delivered — e.g. a feature, an app, a migration.]',
+      '[A result — faster, fewer bugs, more users, shipped on time.]',
+      'Used Claude Code daily as an AI pair programmer for [e.g. refactoring, tests, exploring unfamiliar backend code], reviewing every change myself.',
+    ],
+    stack: ['Angular', 'TypeScript', '.NET', 'C#', '[database]', '[cloud]'],
+  },
+  {
+    company: 'VAB',
+    location: 'Zwijndrecht',
+    url: 'https://www.vab.be',
+    freelance: true,
+    roles: [{ title: 'Software Engineer', period: { from: '2022-07', to: '2024-12' } }],
+    summary:
+      'Angular and C# development for one of Belgium’s largest mobility and roadside-assistance organisations.',
+    highlights: [
+      'Built the new vab.be website: an Angular SSR frontend on top of Sitecore as headless CMS.',
+      'Worked in an Nx workspace with Tailwind, delivering within a SAFe release train.',
+      'Contributed to the C# / ASP.NET backend and Web APIs feeding the frontend.',
+    ],
+    stack: ['Angular', 'TypeScript', 'Nx', 'RxJS', 'SSR', 'Tailwind', 'C#', 'ASP.NET MVC', 'Sitecore', 'Azure DevOps'],
+  },
+  {
+    company: 'Rydoo',
+    location: 'Mechelen',
+    url: 'https://www.rydoo.com',
+    roles: [
+      { title: 'Front-End Technical Lead', period: { from: '2021-08', to: '2022-06' } },
+      { title: 'Full-Stack Developer', period: { from: '2016-07', to: '2021-08' } },
+      { title: '.NET Developer', period: { from: '2012-05', to: '2016-07' } },
+    ],
+    summary:
+      'Ten years on an expense-management platform, from a three-person team to an international scale-up [~X employees, used by X companies].',
+    highlights: [
+      'Tech lead for the Angular application: set code standards and moved the codebase to an Nx monorepo as the team grew.',
+      'Taught myself Angular and led the rewrite of the ASP.NET WebForms/jQuery frontend into a modern Angular SPA.',
+      'Co-created the shared component library (Storybook) and built the core expense-management screen.',
+      'Built the backend-for-frontend in .NET Core, shaping core APIs into endpoints the frontend could use directly.',
+      'Built integrations with Dropbox, Evernote, Octopus and Exact Online for exchanging expenses and receipts.',
+    ],
+    stack: ['Angular', 'TypeScript', 'NgRx', 'RxJS', 'Nx', 'Jest', 'Storybook', 'C#', '.NET Core', 'ASP.NET', 'SQL Server', 'Entity Framework', 'Docker', 'Azure DevOps'],
+  },
+  {
+    company: 'Vanasoft',
+    location: 'Melsele',
+    url: 'https://www.vanasengineering.be',
+    roles: [{ title: 'Software Engineer', period: { from: '2011-07', to: '2012-05' } }],
+    summary: 'Warehouse-management software for dynamic (Lean-lift, Rotomat) and static industrial warehouses.',
+    highlights: [],
+    stack: ['VB6', 'SQL'],
+  },
+  {
+    company: 'Groupwave',
+    location: 'Kontich',
+    roles: [{ title: 'Intern', period: { from: '2011-01', to: '2011-05' } }],
+    summary:
+      'Built a CV generator in Java: consultants entered their experience once and got a consistent, templated CV in one click. (This CV is generated, too.)',
+    highlights: [],
+    stack: ['Java', 'iText'],
+  },
+];
+
+export const skills = {
+  Frontend: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Nx monorepos', 'SSR', 'Tailwind', 'SCSS', 'Storybook', 'Jest'],
+  Backend: ['C#', '.NET Core', 'ASP.NET MVC / Web API', 'Entity Framework', 'SQL Server', 'REST'],
+  'Platform & tooling': ['Azure', 'Azure DevOps', 'Docker', 'Git', 'SonarQube', 'Sitecore (headless)'],
+  'AI-assisted engineering': ['Claude Code', '[GitHub Copilot?]', 'AI-assisted refactoring & testing', 'Prompting & reviewing agent output'],
+  'Ways of working': ['Scrum', 'SAFe', 'Code reviews', 'Technical leadership'],
+};
+
+export const education = [
+  {
+    degree: 'Bachelor in Applied Informatics',
+    school: 'Karel de Grote Hogeschool, Antwerp',
+    period: { from: '2007-09', to: '2012-06' },
+  },
+];
+
+export const learning = [
+  { year: '2021', title: 'Nx Conf + workshop: Develop at scale with Nx monorepos' },
+  { year: '2019', title: 'AngularConnect' },
+  { year: '2018', title: 'NG-BE + workshop: Angular Architecture Patterns' },
+];
