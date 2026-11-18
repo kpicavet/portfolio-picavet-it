@@ -1,0 +1,204 @@
+---
+/**
+ * The career bar as the way into the experience: pick a company (tab or bar
+ * segment) and its story opens underneath. Without JavaScript every panel is
+ * simply shown in order.
+ */
+import CareerBar from './CareerBar.astro';
+import { experience } from '../data/cv';
+import { formatPeriod } from '../lib/dates';
+import { slug } from '../lib/slug';
+
+const years = (job: (typeof experience)[number]) => {
+  const from = job.roles[job.roles.length - 1].period.from.slice(0, 4);
+  const to = job.roles[0].period.to?.slice(0, 4) ?? 'now';
+  return from === to ? from : `${from}–${to}`;
+};
+---
+
+<section id="experience" class="border-t border-line bg-surface">
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
+    <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
+      <h2 class="text-3xl font-extrabold tracking-tight md:text-4xl">Fifteen years, five companies</h2>
+      <p class="flex items-center gap-4 text-sm text-muted">
+        <span class="flex items-center gap-1.5"><span class="inline-block h-2.5 w-4 bg-red"></span>Employed</span>
+        <span class="flex items-center gap-1.5"><span class="inline-block h-2.5 w-4 bg-mint"></span>Freelance</span>
+      </p>
+    </div>
+
+    <div class="explorer" data-explorer>
+      <div class="bar text-sm">
+        <CareerBar animate />
+      </div>
+
+      <div role="tablist" aria-label="Companies" class="tabs mt-8 flex flex-wrap gap-2">
+        {
+          experience.map((job, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${slug(job.company)}`}
+              aria-controls={`job-${slug(job.company)}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-company={slug(job.company)}
+              class="tab"
+            >
+              <span class:list={['dot', job.freelance ? 'bg-mint' : 'bg-red']} aria-hidden="true" />
+              {job.company}
+              <span class="text-muted tabular-nums">{years(job)}</span>
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        experience.map((job) => (
+          <article
+            id={`job-${slug(job.company)}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${slug(job.company)}`}
+            data-company={slug(job.company)}
+            class="panel cut-corner mt-4 grid gap-6 bg-paper p-6 md:grid-cols-[1fr_2fr] md:gap-12 md:p-10"
+          >
+            <div>
+              <h3 class="text-3xl font-extrabold tracking-tight">
+                {job.url ? (
+                  <a href={job.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
+                    {job.company}
+                  </a>
+                ) : (
+                  job.company
+                )}
+              </h3>
+              <p class="mt-1 text-muted">
+                {job.location}
+                {job.freelance && <span class="ml-2 rounded-sm bg-mint/30 px-1.5 py-0.5 text-sm text-ink">Freelance</span>}
+              </p>
+              <ul class="mt-5 space-y-2">
+                {job.roles.map((role) => (
+                  <li>
+                    <span class="block font-semibold">{role.title}</span>
+                    <span class="text-sm text-muted tabular-nums">{formatPeriod(role.period)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="max-w-[64ch]">
+              <p class="text-lg leading-relaxed">{job.summary}</p>
+              {job.highlights.length > 0 && (
+                <ul class="mt-5 space-y-3 leading-relaxed text-muted">
+                  {job.highlights.map((h) => (
+                    <li class="hl">{h}</li>
+                  ))}
+                </ul>
+              )}
+              <p class="mt-6 text-sm text-mint-deep">{job.stack.join(', ')}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-weight: 600;
+    background: var(--paper);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .tab:hover {
+    border-color: var(--muted);
+  }
+  .tab[aria-selected='true'] {
+    border-color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 1px;
+  }
+  .hl {
+    position: relative;
+    padding-left: 1.1rem;
+  }
+  .hl::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 4px;
+    height: 10px;
+    background: var(--red);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.3px), 0 100%);
+  }
+
+  /* the bar doubles as a picker once JS is running */
+  .explorer.ready :global(.seg) {
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .explorer.ready :global(.seg:not(.on)) {
+    opacity: 0.35;
+  }
+  .explorer.ready :global(.labels [data-company]) {
+    cursor: pointer;
+  }
+  /* seams take the colour of this section, so dimmed segments stay clean */
+  .bar {
+    --paper: var(--surface);
+  }
+  .bar :global(.career) {
+    --h: 28px;
+  }
+  @media (max-width: 640px) {
+    .bar :global(.career) {
+      --h: 20px;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-explorer]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const segs = [...root.querySelectorAll<HTMLElement>('.seg')];
+
+    const select = (company: string, focus = false) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.company === company;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p) => (p.hidden = p.dataset.company !== company));
+      segs.forEach((s) => s.classList.toggle('on', s.dataset.company === company));
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab.dataset.company!));
+      tab.addEventListener('keydown', (e) => {
+        const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        e.preventDefault();
+        const next = tabs[(i + step + tabs.length) % tabs.length];
+        select(next.dataset.company!, true);
+      });
+    });
+    root.querySelectorAll<HTMLElement>('.seg, .labels [data-company]').forEach((el) =>
+      el.addEventListener('click', () => select(el.dataset.company!)),
+    );
+
+    root.classList.add('ready');
+    select(tabs[0].dataset.company!);
+  });
+</script>

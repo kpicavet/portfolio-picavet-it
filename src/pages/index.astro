@@ -2,7 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Work from '../components/Work.astro';
-import Experience from '../components/Experience.astro';
+import CareerExplorer from '../components/CareerExplorer.astro';
+import AtHome from '../components/AtHome.astro';
 import Contact from '../components/Contact.astro';
 import { profile } from '../data/cv';
 
@@ -22,7 +23,8 @@ const personJsonLd = {
 <Layout title="Kenny Picavet, freelance Angular & .NET engineer">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
   <Hero />
+  <CareerExplorer />
   <Work />
-  <Experience />
+  <AtHome />
   <Contact />
 </Layout>

@@ -72,6 +72,7 @@ const tickStyles = flowRow(ticks.map((y) => pct(y)));
       segments.map((s) => (
         <span
           class:list={['seg', s.freelance ? 'free' : 'emp', { current: s.current }]}
+          data-company={slug(s.company)}
           style={`left:${pct(s.start)}%;width:${pct(s.end) - pct(s.start)}%;--d:${(pct(s.start) / 100) * 0.9}s`}
           title={`${s.title}, ${s.company} (${s.label})`}
         />
@@ -83,7 +84,7 @@ const tickStyles = flowRow(ticks.map((y) => pct(y)));
     {
       companies.map((c, i) => (
         <span class:list={['slot', { last: i === companies.length - 1 }]} style={labelStyles[i]}>
-          {linked ? <a href={`#job-${slug(c.name)}`}>{c.name}</a> : <span aria-hidden="true">{c.name}</span>}
+          {linked ? <a href={`#job-${slug(c.name)}`}>{c.name}</a> : <span aria-hidden="true" data-company={slug(c.name)}>{c.name}</span>}
         </span>
       ))
     }

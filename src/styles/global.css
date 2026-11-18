@@ -72,3 +72,12 @@
     color: #1d2a26;
   }
 }
+
+/*
+  Brand motif: the 30° cut that ends both stems of the logo, used as a corner cut.
+  The cut drops var(--cut) * tan(30°) over a horizontal run of var(--cut).
+*/
+@utility cut-corner {
+  --cut: 44px;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut) * 0.5774), calc(100% - var(--cut)) 100%, 0 100%);
+}
