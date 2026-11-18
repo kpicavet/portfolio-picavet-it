@@ -1,6 +1,6 @@
 ---
 /**
- * Career on a true time scale: every role is a segment whose width is its
+ * Career on a true time scale: every company is a segment whose width is its
  * duration. Red = employed, mint = freelance. The current role ends in the
  * same 30° cut as the stems of the logo.
  */
@@ -17,18 +17,21 @@ interface Props {
 }
 const { compact = false, animate = false, linked = false } = Astro.props;
 
+// One segment per company (promotions are in the text; short role pieces read as glitches)
 const segments = experience
-  .flatMap((job) =>
-    job.roles.map((role) => ({
+  .map((job) => {
+    const from = job.roles[job.roles.length - 1].period.from; // roles are newest first
+    const to = job.roles[0].period.to;
+    return {
       company: job.company,
-      title: role.title,
+      title: job.roles.map((r) => r.title).join(', '),
       freelance: Boolean(job.freelance),
-      current: role.period.to === null,
-      start: toYear(role.period.from),
-      end: toEndYear(role.period.to),
-      label: formatPeriod(role.period),
-    })),
-  )
+      current: to === null,
+      start: toYear(from),
+      end: toEndYear(to),
+      label: formatPeriod({ from, to }),
+    };
+  })
   .sort((a, b) => a.start - b.start);
 
 // A break of a month or less carries no information but reads as a glitch: close it
