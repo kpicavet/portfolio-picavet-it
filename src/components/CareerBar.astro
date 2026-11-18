@@ -55,8 +55,15 @@ const companies = experience
 // keep ticks clear of the 'now' label at the end
 const ticks = [first, 2016, 2021].filter((y) => y >= first && y < last - 1.5);
 
-// the last label hugs the right edge so it never runs off the bar
-const labelPos = (start: number, isLast: boolean) => (isLast && pct(start) > 75 ? 'right:0' : `left:${pct(start)}%`);
+/*
+  Labels and ticks are laid out in normal flow (a spacer, then each item as wide
+  as the gap to the next one) instead of absolute positioning. Positioned text is
+  painted late, which scrambles the reading order of the PDF for ATS parsers.
+*/
+const flowRow = (lefts: number[]) =>
+  lefts.map((left, i) => (i < lefts.length - 1 ? `flex-basis:${lefts[i + 1] - left}%` : ''));
+const labelStyles = flowRow(companies.map((c) => pct(c.start)));
+const tickStyles = flowRow(ticks.map((y) => pct(y)));
 ---
 
 <figure class:list={['career', { compact, animate }]}>
@@ -72,23 +79,18 @@ const labelPos = (start: number, isLast: boolean) => (isLast && pct(start) > 75 
     }
   </div>
   <div class="labels">
+    <span class="spacer" style={`flex-basis:${pct(companies[0].start)}%`}></span>
     {
-      companies.map((c, i) =>
-        linked ? (
-          <a href={`#job-${slug(c.name)}`} style={labelPos(c.start, i === companies.length - 1)}>
-            {c.name}
-          </a>
-        ) : (
-          <span style={labelPos(c.start, i === companies.length - 1)} aria-hidden="true">
-            {c.name}
-          </span>
-        ),
-      )
+      companies.map((c, i) => (
+        <span class:list={['slot', { last: i === companies.length - 1 }]} style={labelStyles[i]}>
+          {linked ? <a href={`#job-${slug(c.name)}`}>{c.name}</a> : <span aria-hidden="true">{c.name}</span>}
+        </span>
+      ))
     }
   </div>
   <div class="ticks" aria-hidden="true">
-    {ticks.map((y) => <span style={`left:${pct(y)}%`}>{y}</span>)}
-    <span class="end">now</span>
+    {ticks.map((y, i) => <span class:list={['slot', { fill: i === ticks.length - 1 }]} style={tickStyles[i]}>{y}</span>)}
+    <span class="slot end">now</span>
   </div>
   <figcaption class="sr-only">
     Career timeline. {segments.map((s) => `${s.title} at ${s.company}, ${s.label}.`).join(' ')}
@@ -126,18 +128,45 @@ const labelPos = (start: number, isLast: boolean) => (isLast && pct(start) > 75 
     background: var(--mint, #7fd1b9);
   }
   .current {
-    clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+    /* the 30° cut is painted over with the page colour (no clip-path: keeps PDF text order intact) */
+  }
+  .current::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--slant);
+    height: 100%;
+    background: linear-gradient(to bottom right, transparent 50%, var(--paper, #fff) 50%);
   }
   .labels,
   .ticks {
-    position: relative;
+    display: flex;
     height: 1.6em;
   }
-  .labels > * {
-    position: absolute;
-    top: 0.4em;
-    font-weight: 650;
+  /* slots may shrink (never below their text) so the last label always fits */
+  .spacer,
+  .slot {
+    flex: 0 1 auto;
+    min-width: 0;
     white-space: nowrap;
+  }
+  .slot {
+    min-width: max-content;
+  }
+  .spacer {
+    min-width: 0;
+  }
+  .ticks .fill {
+    flex: 1 1 auto;
+  }
+  .labels {
+    padding-top: 0.4em;
+    font-weight: 650;
+  }
+  .labels .last {
+    flex: 1 0 auto;
+    text-align: right;
   }
   .labels a {
     color: inherit;
@@ -148,14 +177,13 @@ const labelPos = (start: number, isLast: boolean) => (isLast && pct(start) > 75 
   .labels a:hover {
     text-decoration-color: currentColor;
   }
-  .ticks span {
-    position: absolute;
-    top: 0.25em;
+  .ticks {
+    padding-top: 0.25em;
     color: var(--muted, #56655f);
     font-variant-numeric: tabular-nums;
   }
   .ticks .end {
-    right: 0;
+    flex: none;
   }
   .compact .labels,
   .compact .ticks {

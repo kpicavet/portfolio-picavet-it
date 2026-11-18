@@ -40,7 +40,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
           <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
           <li><a href={`tel:${profile.phone.replace(/\s/g, '')}`}>{profile.phone}</a></li>
           <li><a href={profile.website}>{host(profile.website)}</a></li>
-          <li><a href={profile.linkedin}>linkedin.com/in/kenny-picavet</a></li>
+          <li><a href={profile.linkedin}>{host(profile.linkedin)}</a></li>
         </ul>
       </header>
 
@@ -149,6 +149,8 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         font-family: 'Archivo Variable', system-ui, sans-serif;
         font-size: 10pt;
         line-height: 1.45;
+        /* a touch of extra word space so PDF text extraction keeps words apart */
+        word-spacing: 0.03em;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
@@ -222,7 +224,8 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         font-size: 30pt;
         line-height: 1;
         font-weight: 800;
-        letter-spacing: -0.025em;
+        letter-spacing: -0.015em;
+        word-spacing: 0.12em;
         color: var(--red);
       }
       .headline {
@@ -332,21 +335,18 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\
         padding-left: 0;
         list-style: none;
       }
+      /*
+        Bullet: a tiny logo stem ending in a 30° cut, painted as the li's own
+        background. No positioning and no clip-path on purpose: positioned or
+        clipped boxes are painted in a later pass, and the PDF text then comes
+        out in the wrong order for ATS parsers.
+      */
       .highlights li {
-        position: relative;
         padding-left: 12px;
         margin: 1mm 0;
-      }
-      /* bullet: a tiny logo stem, ending in a 30° cut */
-      .highlights li::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0.42em;
-        width: 3.5px;
-        height: 8px;
-        background: var(--red);
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2px), 0 100%);
+        background:
+          linear-gradient(var(--red), var(--red)) 0 0.42em / 3.5px 6px no-repeat,
+          linear-gradient(to bottom right, var(--red) 50%, transparent 50%) 0 calc(0.42em + 6px) / 3.5px 2px no-repeat;
       }
       .stack {
         color: var(--mint-deep);

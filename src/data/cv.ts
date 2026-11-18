@@ -30,7 +30,7 @@ export interface Experience {
 export const profile = {
   name: 'Kenny Picavet',
   headline: 'Senior Angular & .NET Engineer',
-  tagline: 'Freelance · Belgium · 13+ years',
+  tagline: 'Freelance, Belgium, 15+ years',
   location: 'Beveren, Belgium',
   email: 'kenny@picavet-it.com',
   phone: '+32 472 22 26 73',
@@ -39,7 +39,7 @@ export const profile = {
   github: 'https://github.com/kpicavet',
   languages: ['Dutch (native)', 'English (professional)'],
   summary:
-    'Full-stack engineer with 13+ years in Angular and .NET. I spent ten years at Rydoo, ' +
+    'Full-stack engineer with 15+ years in Angular and .NET. I spent ten years at Rydoo, ' +
     'growing with the product from a three-person team to an international scale-up: I rebuilt ' +
     'the frontend from ASP.NET WebForms to Angular, co-built the component library and led the ' +
     'frontend as tech lead. Freelance since 2022, first at VAB, now at Citymesh, where I work on ' +
@@ -59,8 +59,7 @@ export const experience: Experience[] = [
     highlights: [
       'Integrated the BSS with Citymesh’s new in-house mobile network core for a new SME subscription, so it could be sold, activated and managed from the existing platform.',
       'Built a steady stream of new features across the BSS, end to end: backend, frontend and the integrations with the systems around it.',
-      'Now rebuilding the BSS frontend in Angular.',
-      'Designed the AI-assisted workflow the rebuild runs on: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a human review at every step. Since then I’m the person the team asks about working with AI.',
+      'Rebuilding the BSS frontend in Angular on an AI-assisted workflow I designed: a chain of Claude Code skills that takes each screen from analysis to a merged pull request, with a human review at every step. Since then I’m the person the team asks about working with AI.',
     ],
     stack: ['Angular (Signals, standalone components, Reactive Forms)', 'TypeScript', 'Tailwind', 'C#', '.NET', 'Kafka', 'Claude Code'],
   },
@@ -180,7 +179,6 @@ export const skills = {
     'MCP servers',
     'Prompt engineering',
     'AI-assisted code review & testing',
-    'Reviewing AI-written code',
   ],
   'Ways of working': ['Scrum', 'SAFe', 'Kanban', 'Code reviews', 'Technical leadership'],
   Domains: [
