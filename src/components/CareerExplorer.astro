@@ -31,7 +31,7 @@ const years = (job: (typeof experience)[number]) => {
         <CareerBar animate />
       </div>
 
-      <div role="tablist" aria-label="Companies" class="tabs mt-8 flex flex-wrap gap-2">
+      <div role="tablist" aria-label="Companies" class="tabs mt-8 grid gap-2 sm:flex sm:flex-wrap xl:grid xl:grid-cols-5">
         {
           [...experience].reverse().map((job) => (
             <button
@@ -42,11 +42,11 @@ const years = (job: (typeof experience)[number]) => {
               aria-selected={job === experience[0] ? 'true' : 'false'}
               tabindex={job === experience[0] ? 0 : -1}
               data-company={slug(job.company)}
-              class="tab"
+              class="tab whitespace-nowrap sm:grow"
             >
               <span class:list={['dot', job.freelance ? 'bg-mint' : 'bg-red']} aria-hidden="true" />
               {job.company}
-              <span class="text-muted tabular-nums">{years(job)}</span>
+              <span class="ml-auto text-muted tabular-nums">{years(job)}</span>
             </button>
           ))
         }

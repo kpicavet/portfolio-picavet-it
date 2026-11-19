@@ -40,7 +40,7 @@ export const profile = {
   languages: ['Dutch (native)', 'English (professional)'],
   summary:
     'Full-stack engineer with 15+ years in Angular and .NET. I spent ten years at Rydoo, ' +
-    'growing with the product from a three-person team to an international scale-up: I rebuilt ' +
+    'growing with the product from a development team of three to an international scale-up: I rebuilt ' +
     'the frontend from ASP.NET WebForms to Angular, co-built the component library and led the ' +
     'frontend as tech lead. Freelance since 2022, first at VAB, now at Citymesh, where I work on ' +
     'both ends of their BSS platform and set up the way the team builds with AI. ' +
@@ -89,7 +89,7 @@ export const experience: Experience[] = [
       { title: '.NET Developer', period: { from: '2012-05', to: '2016-07' } },
     ],
     summary:
-      'Ten years on an expense-management platform, from a three-person team to an international scale-up.',
+      'Ten years on an expense-management platform, from three developers to an international scale-up.',
     highlights: [
       'Tech lead for the Angular application: set code standards and moved the codebase to an Nx monorepo as the team grew.',
       'Taught myself Angular and led the rewrite of the ASP.NET WebForms/jQuery frontend into a modern Angular SPA.',
