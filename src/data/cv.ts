@@ -35,7 +35,7 @@ export const profile = {
   email: 'kenny@picavet-it.com',
   phone: '+32 472 22 26 73',
   website: 'https://www.picavet-it.com',
-  linkedin: 'https://www.linkedin.com/in/kenny-picavet-633b3230',
+  linkedin: 'https://www.linkedin.com/in/kenny-picavet',
   github: 'https://github.com/kpicavet',
   languages: ['Dutch (native)', 'English (professional)'],
   summary:
